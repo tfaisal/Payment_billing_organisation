@@ -1,0 +1,127 @@
+buildscript {
+    ext {
+        springBootVersion = springBootVersion
+        bouncycastleVersion = "1.56"
+    }
+    repositories {
+        maven { url "http://a.greatestclubmanagementsoftwareever.com/artifactory/repo" }
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath 'org.asciidoctor:asciidoctor-gradle-plugin:1.5.3'
+    }
+}
+
+plugins {
+     id 'checkstyle'
+     id 'org.sonarqube' version '2.5'
+     id 'net.ltgt.apt' version '0.10'
+}
+
+apply plugin: 'groovy'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'org.asciidoctor.convert'
+apply plugin: 'jacoco'
+
+def revision = 'git rev-parse HEAD'.execute().text.trim()
+def branch = 'git rev-parse --abbrev-ref HEAD'.execute().text.trim()
+
+group = projectGroup
+version = "${new Date().format('yyyy')}.${new Date().format('MM')}.${'git rev-parse --short=8 HEAD'.execute().text.trim()}"
+sourceCompatibility = projectSourceCompatibility
+
+repositories {
+    maven { url "http://a.greatestclubmanagementsoftwareever.com/artifactory/repo" }
+}
+
+ext {
+    springCloudVersion = springCloudVersion
+    springAutoRestDocsVersion = "2.0.1" // ???
+    javadocJsonDir = file("$buildDir/generated-javadoc-json")
+    snippetsDir = file("$buildDir/generated-snippets")
+}
+
+configurations {
+    jsondoclet
+}
+
+dependencies {
+    implementation('com.abcfinancial.api:common-core:7.4.1')
+    implementation('com.abcfinancial.api:common-email:0.0.4')
+    implementation group: 'commons-validator', name: 'commons-validator', version: '1.6'
+    implementation group: 'commons-io', name: 'commons-io', version: '2.4'
+    implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.0.0'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-quartz'
+    implementation group: 'com.abcfinancial.common', name: 'platform-common-storage', version: '0.1.2'
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-oauth2'
+    compile group: 'org.codehaus.groovy', name: 'groovy-dateutil', version: '2.5.6'
+    testImplementation group: 'org.testng', name: 'testng', version: '6.11'
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+    testImplementation group: 'capital.scalable', name: 'spring-auto-restdocs-core', version: springAutoRestDocsVersion
+    testImplementation group: 'org.springframework.security', name: 'spring-security-test'
+    testImplementation('com.abcfinancial.api:common-unit-test:6.4.0')
+    testImplementation group: 'org.springframework.restdocs', name: 'spring-restdocs-mockmvc'
+    testImplementation group: 'com.devskiller', name: 'jfairy', version: '0.6.1'
+    testImplementation group: 'io.projectreactor', name: 'reactor-test'
+    testImplementation('org.mariadb.jdbc:mariadb-java-client')
+    compileOnly('org.projectlombok:lombok:1.18.4')
+    annotationProcessor('org.projectlombok:lombok:1.18.4')
+    testRuntime group: 'com.h2database', name: 'h2'
+    jsondoclet group: 'capital.scalable', name: 'spring-auto-restdocs-json-doclet', version: springAutoRestDocsVersion
+    runtime group: 'mysql', name: 'mysql-connector-java'
+
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+checkstyle {
+    toolVersion = '7.6'
+}
+
+task jsonDoclet(type: Javadoc, dependsOn: compileJava) {
+    options.encoding = 'UTF-8'
+    source = sourceSets.main.allJava
+    classpath = sourceSets.main.compileClasspath
+    destinationDir = javadocJsonDir
+    options.docletpath = configurations.jsondoclet.files.asType(List)
+    options.doclet = 'capital.scalable.restdocs.jsondoclet.ExtractDocumentationAsJsonDoclet'
+    options.memberLevel = JavadocMemberLevel.PACKAGE
+}
+
+test {
+    dependsOn jsonDoclet
+    useTestNG()
+    systemProperty 'org.springframework.restdocs.outputDir', snippetsDir
+    systemProperty 'org.springframework.restdocs.javadocJsonDir', javadocJsonDir
+    //exclude 'com/abcfinancial/api/**'
+}
+javadoc {
+    options.encoding = "UTF-8"
+}
+
+asciidoctor {
+    dependsOn test
+    options.encoding = "UTF-8"
+    attributes "snippets": snippetsDir
+
+}
+
+bootJar {
+    dependsOn asciidoctor
+    from("${asciidoctor.outputDir}/html5") {
+        into 'static/docs'
+    }
+}
+sonarqube {
+    properties {
+        property "sonar.exclusions", "src/main/java/com/abcfinancial/api/**/**/domain/*.java," +
+                "src/main/java/com/abcfinancial/api/**/**/model/*.java," +
+                "src/main/java/com/abcfinancial/api/**/**/valueobject/*.java"
+    }
+}

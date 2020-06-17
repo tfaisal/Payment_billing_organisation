@@ -1,0 +1,28 @@
+package com.abcfinancial.api.billing.subscriptionmanagement.agreement.domain;
+
+import lombok.Data;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.EntityListeners;
+import java.io.Serializable;
+import java.util.UUID;
+
+@Data
+@EntityListeners( AuditingEntityListener.class )
+@Embeddable
+public class AgreementMemberId implements Serializable
+{
+    /**
+     * AgreementNumber
+     */
+    @Column( name = "agrm_id" )
+    private UUID agreementId;
+    /**
+     * Member Id
+     */
+
+    @Column( name = "m_id" )
+    private UUID memId;
+}

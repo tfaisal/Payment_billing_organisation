@@ -1,0 +1,122 @@
+server.port: 0
+datasource:
+  schema: 'billing'
+  port: 0 # will be substituted with meaningfull value by "common-unit-tests" after "Testcontainers" initialization
+management:
+  server.port: 0
+  endpoint.health.show-details: always
+  endpoints.web.exposure.include: '*'
+s3mock.port:
+  http: 9090 # will be substituted with meaningfull value by "common-unit-tests" after "S3Mock" initialization
+  https: 9191 # will be substituted with meaningfull value by "common-unit-tests" after "S3Mock" initialization
+spring:
+  application.name: 'billing'
+  kafka:
+    bootstrapServers: ${spring.embedded.kafka.brokers}
+    consumer:
+      groupId: billing
+      autoOffsetReset: earliest
+      keyDeserializer: org.apache.kafka.common.serialization.StringDeserializer
+      valueDeserializer: org.apache.kafka.common.serialization.StringDeserializer #spring message converter will take care of deserialization
+    producer:
+      keySerializer: org.apache.kafka.common.serialization.StringSerializer
+      valueSerializer: org.springframework.kafka.support.serializer.JsonSerializer
+  zipkin:
+    enabled: false
+  jpa:
+    #show-sql: true
+    hibernate.ddl-auto: none
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate.format_sql: true
+  datasource:
+    name: 'BillingSQL'
+    #driver-class-name: org.mariadb.jdbc.Driver
+    url: 'jdbc:mariadb://localhost:${datasource.port}/${datasource.schema}'
+    username: 'root'
+    password: ''
+  liquibase:
+    url: '${spring.datasource.url}'
+    contexts: local
+    parameters.env: '${spring.profiles.active}'
+    user: 'root'
+    password: ''
+  jmx:
+    enabled: false
+eureka:
+  client:
+    enabled: false
+abcfinancial:
+  email:
+    provider: 'SES'
+    template:
+      purchase-request: 'BigBox-PurchaseRequest'
+  aws:
+    sender: 'noreply@greatestclubmanagementsoftwareever.com'
+    region: 'us-west-2'
+    accessKey: ''
+    secretKey: ''
+  security:
+    hierarchy:
+      scopePattern: '*:admin > *:protected *:protected > *:write *:write > *:read'
+      authorityPattern: '*:client-admin > *:client-protected *:client-protected > *:client-write *:client-write > *:client-read *:admin > *:protected *:protected > *:write *:write > *:read'
+logging:
+  level:
+    root: ERROR
+    com.abcfinancial.api.common: INFO
+security:
+  oauth2:
+    client:
+      client-id: 'AUTOMATED_TESTING'
+      client-secret: 't3st@llth3th1ngs'
+    resource:
+      jwt:
+        key-value: 'local_signing_key'
+account.username: avalaratax@abcfinancial.com
+account.password: TaxDev@Bhavna
+avalara.offer: ABCFinancialAvaTaxIncluded
+#    org.hibernate: TRACE
+# Dimebox URI
+dimebox:
+  uri:
+    #Dimebox create transaction API URI
+    createtransaction:  https://dev.30preprod.com/api-deprecated/dimebox/transaction
+    #Dimebox get Card API URI
+    getCardDetails:  https://dev.30preprod.com/api-deprecated/dimebox/transaction/card
+    #Dimebox get Account URI
+    getAccountById:  https://dev.30preprod.com/api-deprecated/dimebox/setup/account/
+    #Dimebox Refund card transaction
+    refundCardDetails: https://dev.30preprod.com/api-deprecated/dimebox/transaction/{TransID}/refund
+    #Dimebox Void card transaction
+    voidCardTransaction: https://dev.30preprod.com/api-deprecated/dimebox/transaction/{TransID}/void_capture
+    #Dimebox get Card API URI
+    updateCardDetails: https://dev.30preprod.com/api-deprecated/dimebox/transaction/card/
+avalara:
+  uri:
+    requestNewAccount: https://sandbox-rest.avatax.com/api/v2/accounts/request
+    queryCompanies: https://sandbox-rest.avatax.com/api/v2/companies
+    queryLocations: https://sandbox-rest.avatax.com/api/v2/locations
+    resolveAddress: https://sandbox-rest.avatax.com/api/v2/addresses/resolve
+    getNexus: https://sandbox-rest.avatax.com/api/v2/companies/{companyId}/nexus
+    createTransaction: https://sandbox-rest.avatax.com/api/v2/transactions/create
+    createLocationAccount: http://avalara-tax:8080/createLocation/{companyId}
+    createNexus: http://avalara-tax:8080/nexus/{companyId}
+paymentGateway:
+  uri:
+    createMerchant: https://dev.30preprod.com/api/merchant
+    activateMerchant: https://dev.30preprod.com/api/merchants/activate/
+    processorId: 41713f0d-37c8-4283-adff-0e718fcaca9b
+    companyId: eadffc7d-b584-459f-8c01-029d98383c72
+    paymentRequest: https://dev.30preprod.com/api/charge
+    depositRequest: https://dev.30preprod.com/api/deposit
+authorisation:
+  uri:
+    getAccessTokenUsingOath2: https://dev.30preprod.com/api/token?grant_type=client_credentials
+    client-id: 'AUTOMATED_TESTING'
+    client-secret: 't3st@llth3th1ngs'
+generalLedger:
+  scheduleTime:
+    settlement: 23.15.00.00
+    statement: 23.00.00.00

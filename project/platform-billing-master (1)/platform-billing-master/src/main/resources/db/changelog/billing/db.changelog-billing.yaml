@@ -1,0 +1,2749 @@
+databaseChangeLog:
+- changeSet:
+    id: create_billing_table
+    author: araj@bhavnacorp.com
+    changes:
+    - createTable:
+        tableName: account
+        columns:
+        - column:
+            name: loc_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: accn_id
+            type: VARBINARY(16)
+            constraints:
+              primaryKey: true
+              primaryKeyName: pk_account
+        - column:
+            name: accn_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: accn_modified
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+                nullable: false
+        - column:
+            name: accn_deactivated
+            type: DATETIME
+        - column:
+            name: accn_name
+            type: varchar(100)
+            constraints:
+              nullable: false
+        - column:
+            name: accn_phone
+            type: varchar(15)
+        - column:
+           name: accn_email
+           type: varchar(254)
+        - column:
+           name: accn_billing_date
+           type: DATETIME
+        - column:
+           name: accn_s_evaluation
+           type: varchar(100)
+           constraints:
+                nullable: false
+    - createTable:
+        tableName: payment_method
+        columns:
+        - column:
+            name: loc_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: pame_id
+            type: VARBINARY(16)
+            constraints:
+              primaryKey: true
+              primaryKeyName: pk_payment_method
+              nullable: false
+        - column:
+            name: pame_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: pame_modified
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+                nullable: false
+        - column:
+            name: pame_deactivated
+            type: DATETIME
+        - column:
+            name: pame_is_active
+            type: BOOLEAN
+            constraints:
+              nullable: false
+        - column:
+            name: pame_account_holder
+            type: varchar(100)
+        - column:
+            name: pame_postal_code
+            type: varchar(9)
+        - column:
+            name: pame_type
+            type: ENUM ('CREDIT_CARD','BANK_ACCOUNT','CASH')
+            constraints:
+              nullable: false
+        - column:
+            name: pame_display
+            type: varchar(100)
+        - column:
+            name: pame_processor
+            type: ENUM ('DIMEBOX')
+        - column:
+            name: pame_brand
+            type: ENUM ('VISA','MASTERCARD','DISCOVER','AMEX')
+        - column:
+            name: pame_token
+            type: varchar(128)
+        - column:
+            name: pame_routing
+            type: varchar(9)
+        - column:
+            name: pame_account
+            type: varchar(100)
+        - column:
+            name: pame_expiration_month
+            type: integer
+        - column:
+            name: pame_expiration_year
+            type: integer
+        - column:
+            name: accn_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: pame_alias
+            type: varchar(50)
+        - column:
+            name: pame_bank_accn_type
+            type: ENUM ('SAVING','CHECKING')
+        - column:
+            name: pame_token_id
+            type: uuid
+    - createTable:
+        tableName: client_account
+        columns:
+        - column:
+            name: loc_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: loca_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: loca_deactivated
+            type: DATETIME
+        - column:
+            name: accn_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: client_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: mer_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+    - createTable:
+        tableName: payor_account
+        columns:
+        - column:
+            name: payor_id
+            type: VARBINARY(16)
+            constraints:
+              primaryKey: true
+              primaryKeyName: pk_payor_account
+              nullable: false
+        - column:
+            name: loc_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: meac_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: meac_deactivated
+            type: DATETIME
+        - column:
+            name: accn_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: m_id
+            type: VARBINARY(16)
+- changeSet:
+    id: add_fk_constraint_id
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - addForeignKeyConstraint:
+        constraintName: fk_payment_method_account
+        baseColumnNames: accn_id
+        baseTableName: payment_method
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: accn_id
+        referencedTableName: account
+        validate: true
+    - addForeignKeyConstraint:
+        constraintName: fk_client_account_account
+        baseColumnNames: accn_id
+        baseTableName: client_account
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: accn_id
+        referencedTableName: account
+        validate: true
+    - addForeignKeyConstraint:
+        constraintName: fk_payor_account_account
+        baseColumnNames: accn_id
+        baseTableName: payor_account
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: accn_id
+        referencedTableName: account
+        validate: true
+- changeSet:
+    id: add_composite_key_constraint_id
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - addUniqueConstraint :
+        constraintName: uc_client_account_accn_id_loc_id
+        columnNames: accn_id,loc_id
+        tableName: client_account
+- changeSet:
+    id: create_billing_table_2
+    author: araj@bhavnacorp.com
+    changes:
+    - createTable:
+        tableName: subscription
+        columns:
+        - column:
+            name: loc_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: sub_id
+            type: VARBINARY(16)
+            constraints:
+              primaryKey: true
+              primaryKeyName: pk_subscription
+        - column:
+            name: sub_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: sub_modified
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: sub_deactivated
+            type: DATETIME
+        - column:
+            name: supl_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: supl_version
+            type: bigint
+            constraints:
+              nullable: false
+        - column:
+            name: sub_start_date
+            type: DATETIME
+            constraints:
+              nullable: false
+        - column:
+            name: sub_frequency
+            type: ENUM ('DAILY','WEEKLY','EVERY_OTHER_WEEK','MONTHLY','EVERY_OTHER_MONTH','QUARTERLY','SEMIANNUALLY','ANNUALLY')
+        - column:
+            name: sub_duration
+            type: integer
+        - column:
+            name: sub_duration_unit
+            type: ENUM ('MONTHS','WEEKS','DAYS','YEARS')
+        - column:
+            name: sub_name
+            type: varchar(100)
+            constraints:
+             nullable: false
+        - column:
+            name: emp_id
+            type: VARBINARY(16)
+        - column:
+            name: accn_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: sub_expiration_date
+            type: DATETIME
+        - column:
+            name: sub_freeze_start_date
+            type: DATETIME
+        - column:
+            name: sub_freeze_end_date
+            type: DATETIME
+        - column:
+            name: sub_freeze_amount
+            type: numeric(22,4)
+        - column:
+            name: sub_freeze_id
+            type: VARBINARY(16)
+        - column:
+            name: sub_referal_id
+            type: VARBINARY(16)
+        - column:
+            name: sub_schedule_invoices_id
+            type: VARBINARY(16)
+        - column:
+            name: sub_is_active
+            type: BOOLEAN
+            constraints:
+              nullable: false
+        - column:
+            name: sub_cancellation_date
+            type: DATETIME
+        - column:
+            name: sub_is_open
+            type: BOOLEAN
+            defaultValueBoolean: false
+            constraints:
+              nullable: false
+        - column:
+            name: sub_cancel_event_id
+            type: VARBINARY(16)
+        - column:
+            name: sub_type
+            type: ENUM ('NEW','RENEW','REWRITE','AUTO_RENEW')
+        - column:
+            name: sub_renew_date
+            type: DATETIME
+        - column:
+            name: sub_is_renew
+            type: BOOLEAN
+            defaultValueBoolean: false
+            constraints:
+              nullable: false
+        - column:
+            name: sub_schedule_renewal_id
+            type: VARBINARY(16)
+        - column:
+            name: sub_renew_type
+            type: ENUM ('OPEN','TERM')
+        - column:
+            name: sub_is_auto_renew
+            type: BOOLEAN
+            defaultValueBoolean: false
+            constraints:
+              nullable: false
+        - column:
+            name: sub_expired_event_id
+            type: VARBINARY(16)
+        - column:
+            name: sub_invoice_date
+            type: DATETIME
+        - column:
+            name: sub_renewal_frequency
+            type: ENUM ('DAILY','WEEKLY','EVERY_OTHER_WEEK','MONTHLY','EVERY_OTHER_MONTH','QUARTERLY','SEMIANNUALLY','ANNUALLY')
+    - createTable:
+        tableName: member_subscription
+        columns:
+        - column:
+            name: loc_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: mesu_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: mesu_deactivated
+            type: DATETIME
+        - column:
+            name: m_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: sub_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+    - createTable:
+        tableName: subscription_item
+        columns:
+        - column:
+            name: loc_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: suit_id
+            type: VARBINARY(16)
+            constraints:
+              primaryKey: true
+              primaryKeyName: pk_subscription_item
+        - column:
+            name: suit_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: suit_modified
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: suit_deactivated
+            type: DATETIME
+        - column:
+            name: suit_name
+            type: varchar(254)
+            constraints:
+              nullable: false
+        - column:
+            name: suit_price
+            type: decimal(22,4)
+            constraints:
+              nullable: false
+        - column:
+            name: suit_quantity
+            type: int4
+            constraints:
+              nullable: false
+        - column:
+            name: it_version
+            type: bigint
+            constraints:
+              nullable: false
+        - column:
+            name: suit_type
+            type: ENUM ('AMENITY','PRODUCT','SERVICE','FEE')
+            constraints:
+              nullable: false
+        - column:
+            name: suit_is_unlimited
+            type: BOOLEAN
+            defaultValueBoolean: false
+            constraints:
+              nullable: false
+        - column:
+            name: suit_expiration_start
+            type: ENUM ('PURCHASE','FIRST_USAGE')
+            constraints:
+              nullable: false
+        - column:
+            name: suit_expiration_unit
+            type: ENUM ('DAYS','WEEKS','MONTHS','YEARS')
+        - column:
+            name: suit_expiration_period
+            type: int4
+        - column:
+            name: it_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: sub_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: suit_category_id
+            type: VARBINARY(16)
+    - createTable:
+        tableName: payment
+        columns:
+        - column:
+            name: loc_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: pay_id
+            type: VARBINARY(16)
+            constraints:
+              primaryKey: true
+              primaryKeyName: pk_payment
+        - column:
+            name: pay_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: pay_modified
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: pay_deactivated
+            type: DATETIME
+        - column:
+            name: pay_received_date
+            type: DATETIME
+        - column:
+            name: pay_amount
+            type: numeric(22,4)
+            constraints:
+              nullable: false
+        - column:
+            name: pay_status
+            type: ENUM ('PENDING','APPROVED','DECLINED','CHARGEBACK','SCHEDULED','REFUND')
+            constraints:
+              nullable: false
+        - column:
+            name: pay_settlement_status
+            type: ENUM ('SETTLEMENT_REQUESTED','SETTLEMENT_COMPLETED')
+        - column:
+            name: pame_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: pay_processor_id
+            type: varchar(64)
+        - column:
+            name: accn_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: pay_type
+            type: ENUM ('VISA','MASTERCARD','DISCOVER','AMEX')
+        - column:
+            name: pay_id_refund
+            type: VARBINARY(16)
+        - column:
+            name: pay_invoice_type
+            type: ENUM ('O','T')
+            defaultValue: O
+        - column:
+            name: pay_transfer_date
+            type: DATETIME
+        - column:
+            name: pay_invoice_no
+            type: varchar(18)
+        - column:
+            name: st_id
+            type: VARBINARY(16)
+        - column:
+            name: inv_id
+            type: VARBINARY(16)
+    - createTable:
+        tableName: invoice
+        columns:
+        - column:
+            name: loc_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: inv_id
+            type: VARBINARY(16)
+            constraints:
+              primaryKey: true
+              primaryKeyName: pk_invoice
+        - column:
+            name: inv_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: inv_modified
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: inv_deactivated
+            type: DATETIME
+        - column:
+            name: total_net_price
+            type: numeric(22,4)
+            constraints:
+              nullable: false
+        - column:
+            name: total_discount_amount
+            type: numeric(22,4)
+            constraints:
+              nullable: false
+        - column:
+            name: total_tax
+            type: decimal(22,4)
+            constraints:
+              nullable: false
+        - column:
+            name: total_price
+            type: numeric(22,4)
+            constraints:
+              nullable: false
+        - column:
+            name: sub_id
+            type: VARBINARY(16)
+        - column:
+            name: emp_id
+            type: VARBINARY(16)
+        - column:
+            name: m_id
+            type: VARBINARY(16)
+        - column:
+            name: accn_id
+            type: VARBINARY(16)
+            constraints:
+                nullable: false
+        - column:
+            name: inv_date
+            type: DATETIME
+        - column:
+            name: as_id
+            type: VARBINARY(16)
+        - column:
+            name: ava_txn_id
+            type: varchar(30)
+        - column:
+            name: inv_invoice_type
+            type: ENUM ('O','T')
+            defaultValue: O
+        - column:
+            name: inv_invoice_no
+            type: varchar(18)
+        - column:
+            name: inv_transfer_date
+            type: DATETIME
+    - createTable:
+        tableName: invoice_payment
+        columns:
+        - column:
+            name: inpa_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: inpa_deactivated
+            type: DATETIME
+        - column:
+            name: inv_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: pay_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+    - createTable:
+        tableName: invoice_item
+        columns:
+        - column:
+            name: loc_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: invi_id
+            type: VARBINARY(16)
+            constraints:
+              primaryKey: true
+              primaryKeyName: pk_invoice_item
+        - column:
+            name: invi_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: invi_modified
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: invi_deactivated
+            type: DATETIME
+        - column:
+            name: invi_name
+            type: varchar(254)
+            constraints:
+              nullable: false
+        - column:
+            name: invi_price
+            type: numeric(22,4)
+            constraints:
+              nullable: false
+        - column:
+            name: it_version
+            type: bigint
+            constraints:
+              nullable: false
+        - column:
+            name: invi_tax_amount
+            type: decimal(22,4)
+            constraints:
+              nullable: false
+        - column:
+            name: invi_discount_code
+            type: varchar(254)
+        - column:
+            name: invi_discount_amount
+            type: numeric(22,4)
+        - column:
+            name: invi_amount_remaining
+            type: numeric(22,4)
+            constraints:
+              nullable: false
+        - column:
+            name: invi_type
+            type: ENUM ('AMENITY','PRODUCT','SERVICE','FEE')
+            constraints:
+              nullable: false
+        - column:
+            name: invi_quantity
+            type: int4
+            constraints:
+              nullable: false
+        - column:
+            name: invi_is_unlimited
+            type: BOOLEAN
+            constraints:
+              nullable: false
+        - column:
+            name: invi_expiration_start
+            type: ENUM ('PURCHASE','FIRST_USAGE')
+        - column:
+            name: invi_expiration_period
+            type: int4
+        - column:
+            name: invi_expiration_unit
+            type: ENUM ('DAYS','WEEKS','MONTHS','YEARS')
+        - column:
+            name: it_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: inv_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: amtc_tax_code
+            type: varchar(30)
+        - column:
+            name: invi_category_id
+            type: VARBINARY(16)
+    - createTable:
+        tableName: location_tax_rate
+        columns:
+        - column:
+            name: loc_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: ltr_id
+            type: VARBINARY(16)
+            constraints:
+              primaryKey: true
+              primaryKeyName: pk_location_tax_rate
+        - column:
+            name: ltr_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: ltr_modified
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+                nullable: false
+        - column:
+            name: ltr_deactivated
+            type: DATETIME
+        - column:
+            name: ltr_tax_rate
+            type: decimal(6,3)
+        - column:
+            name: ltr_tax_code
+            type: varchar(30)
+        - column:
+            name: ltr_is_overriden
+            type: BOOLEAN
+            defaultValueBoolean: false
+        - column:
+            name: ltr_suggested_tax_rate
+            type: numeric(6,3)
+        - column:
+            name: itca_id
+            type: VARBINARY(16)
+        - column:
+            name: emp_id
+            type: VARBINARY(16)
+            defaultValue: uuid_nil()
+            constraints:
+              nullable: false
+        - column:
+            name: ltr_version
+            type: bigint
+            defaultValue: 0000001
+            constraints:
+              nullable: false
+    - createTable:
+        tableName: dimebox_processor
+        columns:
+        - column:
+            name: loc_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: dipr_id
+            type: VARBINARY(16)
+            constraints:
+              primaryKey: true
+              primaryKeyName: pk_dimebox_processor
+        - column:
+            name: dipr_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: dipr_modified
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: dipr_deactivated
+            type: DATETIME
+        - column:
+            name: dipr_orgn_id
+            type: varchar(64)
+            constraints:
+              nullable: false
+        - column:
+            name: dipr_acnt_id
+            type: varchar(64)
+            constraints:
+              nullable: false
+    - addForeignKeyConstraint:
+        constraintName: fk_payment_account
+        baseColumnNames: accn_id
+        baseTableName: payment
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: accn_id
+        referencedTableName: account
+        validate: true
+    - addForeignKeyConstraint:
+        constraintName: fk_invoice_account
+        baseColumnNames: accn_id
+        baseTableName: invoice
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: accn_id
+        referencedTableName: account
+        validate: true
+    - addForeignKeyConstraint:
+        constraintName: fk_subscription_account
+        baseColumnNames: accn_id
+        baseTableName: subscription
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: accn_id
+        referencedTableName: account
+        validate: true
+    - addForeignKeyConstraint:
+        constraintName: fk_invoice_payment_payment
+        baseColumnNames: pay_id
+        baseTableName: invoice_payment
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: pay_id
+        referencedTableName: payment
+        validate: true
+    - addForeignKeyConstraint:
+        constraintName: fk_invoice_payment_invoice
+        baseColumnNames: inv_id
+        baseTableName: invoice_payment
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: inv_id
+        referencedTableName: invoice
+        validate: true
+    - addForeignKeyConstraint:
+        constraintName: fk_invoice_subscription
+        baseColumnNames: sub_id
+        baseTableName: invoice
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: sub_id
+        referencedTableName: subscription
+        validate: true
+    - addForeignKeyConstraint:
+        constraintName: fk_member_subscription_subscription
+        baseColumnNames: sub_id
+        baseTableName: member_subscription
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: sub_id
+        referencedTableName: subscription
+        validate: true
+    - addForeignKeyConstraint:
+        constraintName: fk_subscription_item_subscription
+        baseColumnNames: sub_id
+        baseTableName: subscription_item
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: sub_id
+        referencedTableName: subscription
+        validate: true
+    - addForeignKeyConstraint:
+        constraintName: fk_invoice_item_invoice
+        baseColumnNames: inv_id
+        baseTableName: invoice_item
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: inv_id
+        referencedTableName: invoice
+        validate: true
+    - addUniqueConstraint :
+        constraintName: composite_unique_member_subscription
+        columnNames: m_id,sub_id
+        tableName: member_subscription
+    - addUniqueConstraint :
+        constraintName: uc_payor_account_accn_id_m_id_loc_id
+        columnNames: accn_id,m_id,loc_id
+        tableName: payor_account
+    - addUniqueConstraint :
+        constraintName: uc_dimebox_processor_loc_id
+        columnNames: loc_id
+        tableName: dimebox_processor
+- changeSet:
+    id: create_billing_table_3
+    author: araj@bhavnacorp.com
+    changes:
+    - createTable:
+        tableName: accounting_transaction_detail
+        columns:
+        - column:
+            name: loc_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: trde_id
+            type: VARBINARY(16)
+            constraints:
+              primaryKey: true
+              primaryKeyName: pk_accounting_transaction_detail
+        - column:
+            name: trde_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: trde_modified
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: trde_deactivated
+            type: DATETIME
+        - column:
+            name: trde_transaction_date
+            type: DATETIME
+        - column:
+            name: trde_total_price
+            type: numeric(22,4)
+            constraints:
+              nullable: false
+        - column:
+            name: trde_payment_type
+            type: ENUM ('VISA','MASTER_CARD','DISCOVER','AMEX')
+        - column:
+            name: trde_quantity
+            type: integer
+            constraints:
+              nullable: false
+        - column:
+            name: trde_expiration_start_date
+            type: DATETIME
+        - column:
+            name: trde_expiration_end_date
+            type: DATETIME
+        - column:
+            name: trde_promotion_code
+            type: varchar(254)
+        - column:
+            name: trde_discount_amount
+            type: numeric(22,4)
+            constraints:
+              nullable: false
+        - column:
+            name: trde_net_price
+            type: numeric(22,4)
+            constraints:
+              nullable: false
+        - column:
+            name: trde_tax
+            type: numeric(22,4)
+            constraints:
+              nullable: false
+        - column:
+            name: trde_invoice_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: trde_invoice_item_id
+            type: VARBINARY(16)(6)
+            constraints:
+              nullable: false
+        - column:
+            name: trde_item_id
+            type: VARBINARY(16)
+            constraints:
+                nullable: false
+        - column:
+            name: trde_item_version
+            type: bigint
+            constraints:
+              nullable: false
+        - column:
+            name: trde_payment_id
+            type: VARBINARY(16)
+        - column:
+            name: trde_payment_destination
+            type: varchar(100)
+        - column:
+            name: m_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: accn_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+              references: account(accn_id)
+              foreignKeyName: fk_accounting_transaction_detail_account
+        - column:
+            name: emp_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: trde_status
+            type: ENUM ('PENDING','COMPLETED')
+            constraints:
+              nullable: false
+    - createTable:
+        tableName: payment_history
+        columns:
+        - column:
+            name: pamh_id
+            type: VARBINARY(16)
+            constraints:
+              primaryKey: true
+              primaryKeyName: pk_payment_history
+        - column:
+            name: pamh_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: pamh_modified
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: pamh_deactivated
+            type: DATETIME
+        - column:
+            name: pay_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+              references: payment(pay_id)
+              foreignKeyName: fk_payment_history_payment
+        - column:
+            name: pamh_status
+            type: ENUM ('PENDING','APPROVED','DECLINED','CHARGEBACK','SCHEDULED','REFUND')
+            constraints:
+              nullable: false
+        - column:
+            name: pamh_settlement_status
+            type: ENUM ('SETTLEMENT_REQUESTED','SETTLEMENT_COMPLETED')
+        - column:
+            name: pamh_amount
+            type: numeric(22,4)
+            constraints:
+              nullable: false
+    - createTable:
+        tableName: accounting_revenue
+        columns:
+        - column:
+            name: loc_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: acre_id
+            type: VARBINARY(16)
+            constraints:
+              primaryKey: true
+              primaryKeyName: pk_accounting_revenue
+        - column:
+            name: acre_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: acre_modified
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: acre_deactivated
+            type: DATETIME
+        - column:
+            name: acre_net_price
+            type: numeric(22,4)
+            constraints:
+              nullable: false
+        - column:
+            name: acre_item_type
+            type: varchar(254)
+        - column:
+            name: acre_item_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: acre_item_version
+            type: bigint
+            constraints:
+              nullable: false
+        - column:
+            name: acre_quantity_sold
+            type: numeric(22,0)
+            constraints:
+              nullable: false
+        - column:
+            name: acre_start_date
+            type: DATETIME
+            constraints:
+              nullable: false
+        - column:
+            name: acre_revenue_period
+            type: numeric(2,0)
+        - column:
+            name: acre_expiration_date
+            type: DATETIME
+        - column:
+            name: m_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: inv_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+              references: invoice(inv_id)
+              foreignKeyName: fk_accounting_revenue_invoice
+        - column:
+            name: accn_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+              references: account(accn_id)
+              foreignKeyName: fk_accounting_revenue_account
+        - column:
+            name: invi_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+              references: invoice_item(invi_id)
+              foreignKeyName: fk_accounting_revenue_invoice_item
+    - createTable:
+        tableName: statement
+        columns:
+        - column:
+            name: loc_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: st_id
+            type: VARBINARY(16)
+            constraints:
+              primaryKey: true
+              primaryKeyName: pk_statement
+        - column:
+            name: st_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: st_modified
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: st_deactivated
+            type: DATETIME
+        - column:
+            name: st_date
+            type: DATETIME
+            constraints:
+              nullable: false
+        - column:
+            name: st_amount
+            type: numeric(22,4)
+            constraints:
+              nullable: false
+        - column:
+            name: accn_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+              references: account(accn_id)
+              foreignKeyName: fk_statement_account
+    - createTable:
+        tableName: statement_invoice
+        columns:
+        - column:
+            name: loc_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: stin_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: stin_modified
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: stin_deactivated
+            type: DATETIME
+        - column:
+            name: st_id
+            type: VARBINARY(16)
+            constraints:
+              primaryKey: true
+              references: statement(st_id)
+              foreignKeyName: fk_statement_invoice_statement
+        - column:
+            name: inv_id
+            type: VARBINARY(16)
+            constraints:
+              references: invoice(inv_id)
+              foreignKeyName: fk_statement_invoice_invoice
+    - createTable:
+        tableName: balance
+        columns:
+        - column:
+            name: bal_id
+            type: VARBINARY(16)
+            constraints:
+              primaryKey: true
+              primaryKeyName: pk_balance
+        - column:
+            name: accn_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+              foreignKeyName: fk_balance_account
+              references: account(accn_id)
+        - column:
+            name: bal_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: bal_modified
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: bal_deactivated
+            type: DATETIME
+        - column:
+            name: bal_amount
+            type: numeric(22,4)
+        - column:
+            name: bal_date
+            type: DATETIME
+    - createTable:
+        tableName: accounting_refund
+        columns:
+        - column:
+            name: loc_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: acref_id
+            type: VARBINARY(16)
+            constraints:
+              primaryKey: true
+              primaryKeyName: pk_accounting_refund
+        - column:
+            name: acref_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: acref_modified
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: acref_deactivated
+            type: DATETIME
+        - column:
+            name: acref_net_price
+            type: numeric(22,4)
+            constraints:
+              nullable: false
+        - column:
+            name: acref_tax
+            type: decimal(22,4)
+            constraints:
+              nullable: false
+        - column:
+            name: m_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: inv_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+              references: invoice(inv_id)
+              foreignKeyName: fk_accounting_refund_invoice
+        - column:
+            name: accn_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+              references: account(accn_id)
+              foreignKeyName: fk_accounting_refund_account
+        - column:
+            name: invi_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+              references: invoice_item(invi_id)
+              foreignKeyName: fk_accounting_refund_invoice_item
+        - column:
+            name: trde_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+              references: accounting_transaction_detail(trde_id)
+              foreignKeyName: fk_accounting_refund_accounting_transaction_detail
+    - createTable:
+        tableName: currency_lookup
+        columns:
+        - column:
+            name: cur_id
+            type: VARBINARY(16)
+            constraints:
+              primaryKey: true
+              primaryKeyName: pk_currency_lookup
+        - column:
+            name: cur_name
+            type: varchar(100)
+            constraints:
+              nullable: true
+        - column:
+            name: cur_code
+            type: integer
+            constraints:
+              nullable: true
+        - column:
+            name: cur_minor_units
+            type: integer
+            constraints:
+              nullable: true
+    - createTable:
+        tableName: account_adjustment
+        columns:
+        - column:
+            name: loc_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: adj_id
+            type: VARBINARY(16)
+            constraints:
+              primaryKey: true
+              primaryKeyName: pk_adjustment
+        - column:
+            name: adj_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: adj_modified
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: adj_deactivated
+            type: DATETIME
+        - column:
+            name: adj_amount
+            type: numeric(22,4)
+            constraints:
+              nullable: false
+        - column:
+            name: accn_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+              foreignKeyName: fk_account_adjustment_account
+              references: account(accn_id)
+        - column:
+            name: inv_id
+            type: VARBINARY(16)
+            constraints:
+              foreignKeyName: fk_account_adjustment_invoice
+              references: invoice(inv_id)
+        - column:
+            name: m_id
+            type: VARBINARY(16)
+        - column:
+            name: emp_id
+            type: VARBINARY(16)
+        - column:
+            constraints:
+              nullable: false
+            name: adjustment_type
+            type: ENUM ('LATE_FEE','SERVICE_FEE','CREDIT','WAIVE_FEE','ERROR_ADJUST')
+        - column:
+            name: adjustment_field
+            type: varchar(254)
+        - column:
+            name: as_id
+            type: VARBINARY(16)
+    - createTable:
+        tableName: settlement
+        columns:
+        - column:
+            name: stlm_id
+            type: VARBINARY(16)
+            constraints:
+              primaryKey: true
+              primaryKeyName: pk_settlement
+        - column:
+            name: loc_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: accn_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+              foreignKeyName: fk_settlement_account
+              references: account(accn_id)
+        - column:
+            name: stlm_date
+            type: DATETIME
+        - column:
+            name: stlm_amount
+            type: numeric(22,4)
+            constraints:
+              nullable: false
+        - column:
+            name: stlm_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: stlm_modified
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: stlm_deactivated
+            type: DATETIME
+    - createTable:
+        tableName: account_summary
+        columns:
+        - column:
+            name: as_id
+            type: VARBINARY(16)
+            constraints:
+              primaryKey: true
+              primaryKeyName: pk_account_summary
+        - column:
+            name: pay_id
+            type: VARBINARY(16)
+            constraints:
+              foreignKeyName: fk_account_summary_payment
+              references: payment(pay_id)
+        - column:
+            name: inv_id
+            type: VARBINARY(16)
+            constraints:
+              foreignKeyName: fk_account_summary_invoice
+              references: invoice(inv_id)
+        - column:
+            name: st_id
+            type: VARBINARY(16)
+            constraints:
+              foreignKeyName: fk_account_summary_statement
+              references: statement(st_id)
+        - column:
+            name: stlm_id
+            type: VARBINARY(16)
+            constraints:
+              foreignKeyName: fk_account_summary_settlement
+              references: settlement(stlm_id)
+        - column:
+            name: adj_id
+            type: VARBINARY(16)
+            constraints:
+              foreignKeyName: fk_account_summary_account_adjustment
+              references: account_adjustment(adj_id)
+        - column:
+            name: accn_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+              foreignKeyName: fk_account_summary_account
+              references: account(accn_id)
+        - column:
+            name: acsu_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: acsu_modified
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: acsu_deactivated
+            type: DATETIME
+        - column:
+            name: acsu_date
+            type: DATETIME
+        - column:
+            name: acsu_type
+            type: ENUM ('Cr','Dr','None')
+            constraints:
+              nullable: false
+    - createTable:
+        tableName: ava_master_tax_code
+        columns:
+        - column:
+            name: amtc_tax_id
+            type: VARBINARY(16)
+            constraints:
+              primaryKey: true
+              primaryKeyName: pk_ava_master_tax_code
+        - column:
+            name: amtc_tax_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: amtc_tax_modified
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: amtc_tax_deactivated
+            type: DATETIME
+        - column:
+            name: amtc_tax_code
+            type: varchar(30)
+            constraints:
+              nullable: false
+        - column:
+            name: amtc_tax_description
+            type: varchar(512)
+            constraints:
+              nullable: false
+    - createTable:
+        tableName: ava_account
+        columns:
+        - column:
+            name: org_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: ava_id
+            type: bigint
+            constraints:
+              primaryKey: true
+              primaryKeyName: pk_ava_account
+        - column:
+            name: loc_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: ava_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: ava_modified
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: ava_deactivated
+            type: DATETIME
+    - createTable:
+        tableName: ava_address
+        columns:
+        - column:
+            name: avad_id
+            type: VARBINARY(16)
+            constraints:
+              primaryKey: true
+              primaryKeyName: pk_ava_address
+        - column:
+            name: avad_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: avad_modified
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: avad_deactivated
+            type: DATETIME
+        - column:
+            name: avad_validated
+            type: BOOLEAN
+            defaultValueBoolean: false
+            constraints:
+              nullable: false
+        - column:
+            name: avad_city
+            type: varchar(100)
+        - column:
+            name: avad_postal_code
+            type: varchar(20)
+        - column:
+            name: avad_region
+            type: varchar(100)
+        - column:
+            name: avad_line
+            type: varchar(100)
+        - column:
+            name: avad_latitude
+            type: numeric
+        - column:
+            name: avad_longitude
+            type: numeric
+        - column:
+            name: avad_country
+            type: char(2)
+    - createTable:
+        tableName: ava_company
+        columns:
+        - column:
+            name: avc_id
+            type: VARBINARY(16)
+            constraints:
+              primaryKey: true
+              primaryKeyName: pk_ava_company
+        - column:
+            name: avc_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: avc_modified
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: avc_deactivated
+            type: DATETIME
+        - column:
+            name: avc_license_key
+            type: varchar(30)
+        - column:
+            name: ava_id
+            type: bigint
+            constraints:
+              nullable: false
+              references: ava_account(ava_id)
+              foreignKeyName: fk_ava_company_ava_account
+    - createTable:
+        tableName: ava_location
+        columns:
+        - column:
+            name: avl_id
+            type: VARBINARY(16)
+            constraints:
+              primaryKey: true
+              primaryKeyName: pk_ava_location
+        - column:
+            name: avl_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: avl_modified
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: avl_deactivated
+            type: DATETIME
+        - column:
+            name: avad_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+              references: ava_address(avad_id)
+              foreignKeyName: fk_ava_location_ava_address
+    - createTable:
+        tableName: ava_nexus
+        columns:
+        - column:
+            name: avn_id
+            type: VARBINARY(16)
+            constraints:
+              primaryKey: true
+              primaryKeyName: pk_ava_nexus
+        - column:
+            name: avn_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: avn_modified
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: avn_deactivated
+            type: DATETIME
+        - column:
+            name: avc_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+              references: ava_company(avc_id)
+              foreignKeyName: fk_ava_nexus_ava_company
+        - column:
+            name: avl_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+              references: ava_location(avl_id)
+              foreignKeyName: fk_ava_nexus_ava_location
+    - addUniqueConstraint :
+        constraintName: uc_ava_master_tax_code_amtc_tax_code
+        columnNames: amtc_tax_code
+        tableName: ava_master_tax_code
+    - addForeignKeyConstraint:
+        constraintName: fk_invoice_item_ava_master_tax_code
+        baseColumnNames: amtc_tax_code
+        baseTableName: invoice_item
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: amtc_tax_code
+        referencedTableName: ava_master_tax_code
+        validate: true
+    - createTable:
+        tableName: payment_method_account
+        columns:
+        - column:
+            name: pma_id
+            type: VARBINARY(16)
+            constraints:
+              primaryKey: true
+              primaryKeyName: pk_payment_method_account
+        - column:
+            name: pay_id
+            type: VARBINARY(16)
+            constraints:
+              foreignKeyName: fk_payment_method_account_payment
+              references: payment(pay_id)
+        - column:
+            name: inv_id
+            type: VARBINARY(16)
+            constraints:
+              foreignKeyName: fk_payment_method_account_invoice
+              references: invoice(inv_id)
+        - column:
+            name: st_id
+            type: VARBINARY(16)
+            constraints:
+              foreignKeyName: fk_payment_method_account_statement
+              references: statement(st_id)
+        - column:
+            name: stlm_id
+            type: VARBINARY(16)
+            constraints:
+              foreignKeyName: fk_payment_method_account_settlement
+              references: settlement(stlm_id)
+        - column:
+            name: adj_id
+            type: VARBINARY(16)
+            constraints:
+              foreignKeyName: fk_payment_method_account_account_adjustment
+              references: account_adjustment(adj_id)
+        - column:
+            name: accn_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+              foreignKeyName: fk_payment_method_account_account
+              references: account(accn_id)
+        - column:
+            name: pma_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: pma_modified
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: pma_deactivated
+            type: DATETIME
+        - column:
+            name: pame_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+              foreignKeyName: fk_payment_method_account_payment_method
+              references: payment_method(pame_id)
+        - column:
+            name: pma_type
+            type: ENUM ('Cr','Dr','None')
+        - column:
+            name: pma_date
+            type: DATETIME
+- changeSet:
+    id: create_seq_invoice_no_h2
+    author: araj@bhavnacorp.com
+    dbms : h2
+    sql: "CREATE SEQUENCE seq_invoice_no"
+- changeSet:
+    id: create_seq_invoice_no_mysql
+    author: araj@bhavnacorp.com
+    dbms : mysql
+    sql: "INSERT INTO sequence_data(sequence_name) VALUE ('seq_invoice_no')"
+- changeSet:
+    id: addUniqueConstraint_loctaion_tax_rate_loc_id_itca_id_ltr_version
+    author: araj@bhavnacorp.com
+    changes:
+      - addUniqueConstraint:
+          columnNames: loc_id, itca_id,ltr_version
+          constraintName: uc_location_tax_rate_loc_id_itca_id_ltr_version
+          tableName: location_tax_rate
+- changeSet:
+    id: create_agreement_table
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - createTable:
+        tableName: agreement
+        columns:
+        - column:
+           name: agrm_id
+           type: VARBINARY(16)
+           constraints:
+             primaryKey: true
+             primaryKeyName: pk_agreement
+        - column:
+            name: loc_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: agreement_number
+            type:  BIGINT(18)
+            constraints:
+              nullable: false
+        - column:
+            name: agre_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: agre_modified
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: agre_deactivated
+            type: DATETIME
+    - createTable:
+        tableName: agreement_subscription
+        columns:
+        - column:
+            name: agrmsu_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: agrmsu_deactivated
+            type: DATETIME
+        - column:
+            name: agrm_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: sub_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: agrm_sum_is_primary
+            type: BOOLEAN
+            defaultValueBoolean: false
+            constraints:
+              nullable: false
+    - createTable:
+        tableName: subscription_document
+        columns:
+        - column:
+           name: docsu_created
+           type: DATETIME
+           defaultValueComputed: now()
+           constraints:
+              nullable: false
+        - column:
+           name: docsu_deactivated
+           type: DATETIME
+        - column:
+            name: doc_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+        - column:
+            name: sub_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: false
+    - addUniqueConstraint :
+        constraintName: uc_agreement_subscription_agrm_id_sub_id
+        columnNames: agrm_id,sub_id
+        tableName: agreement_subscription
+    - addUniqueConstraint :
+        constraintName: uc_subscription_document_sub_id_doc_id
+        columnNames: doc_id,sub_id
+        tableName: subscription_document
+    - addForeignKeyConstraint:
+        constraintName: fk_agreement_subscription_subscription
+        baseColumnNames: sub_id
+        baseTableName: agreement_subscription
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: sub_id
+        referencedTableName: subscription
+        validate: true
+- changeSet:
+    id: modify_data_type_pame_token_id
+    author: araj@bhavnacorp.com
+    changes:
+      - modifyDataType:
+          columnName: pame_token_id
+          newDataType: VARBINARY(16)
+          tableName: payment_method
+- changeSet:
+    id: addColumn_sub_renew_expiration_date
+    author: ravishjain@bhavnacorp.com
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            name: sub_renew_expiration_date
+            type: date
+        tableName: subscription
+- changeSet:
+    id: add_column_sub_renewal_duration
+    author: tfaisal@bhavnacorp.com
+    changes:
+    - addColumn:
+        tableName: subscription
+        columns:
+        - column:
+            name: sub_renewal_duration
+            type: integer
+- changeSet:
+    id: add_column_renewal_invoice_date
+    author: araj@bhavnacorp.com
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            name: sub_renewal_invoice_date
+            type: DATETIME
+        tableName: subscription
+- changeSet:
+    id: REL1-5071_refactor_balance_payment_method_account
+    author: ankitaggarwal@bhavnacorp.com
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            name: pame_id
+            type: VARBINARY(16)
+            constraints:
+              foreignKeyName: fk_balance_payment_method
+              references: payment_method(pame_id)
+        tableName: balance
+    - addColumn:
+        columns:
+        - column:
+            name: pame_id
+            type: VARBINARY(16)
+            constraints:
+              foreignKeyName: fk_statement_payment_method
+              references: payment_method(pame_id)
+        tableName: statement
+    - addColumn:
+        columns:
+        - column:
+            name: pame_id
+            type: VARBINARY(16)
+            constraints:
+              foreignKeyName: fk_invoice_payment_method
+              references: payment_method(pame_id)
+        tableName: invoice
+- changeSet:
+    id: dropTable_currency_lookup
+    author: araj@bhavnacorp.com
+    changes:
+    - dropTable:
+        tableName: currency_lookup
+- changeSet:
+   id: create_currency_lookup_table_and_load_data
+   author: araj@bhavnacorp.com
+   changes:
+   - createTable:
+       tableName: currency_lookup
+       columns:
+       - column:
+           name: cur_id
+           type: varchar(3)
+           constraints:
+             primaryKey: true
+             primaryKeyName: pk_currency_lookup
+       - column:
+           name: cur_name
+           type: varchar(100)
+           constraints:
+             nullable: true
+       - column:
+           name: cur_code
+           type: integer
+           constraints:
+             nullable: true
+       - column:
+           name: cur_minor_units
+           type: integer
+           constraints:
+             nullable: true
+   - loadData:
+       tableName: currency_lookup
+       file: db/data/iso-currencies.csv
+       separator: ','
+       columns:
+       - column:
+           name: cur_id
+           type: string
+       - column:
+           name: cur_name
+           type: string
+       - column:
+           name: cur_code
+           type: numeric
+       - column:
+           name: cur_minor_units
+           type: numeric
+- changeSet:
+    id: load_master_tax_data
+    author: araj@bhavnacorp.com
+    changes:
+    - sqlFile:
+        dbms: mysql
+        path: master_tax_data_load.sql
+        stripComments: true
+        relativeToChangelogFile: true
+- changeSet:
+    id: subRenewRefIDSubscription
+    author: ravisjain@bhavnacorp.com
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            name: sub_renew_ref_id
+            type: VARBINARY(16)
+        tableName: subscription
+- changeSet:
+    id: create_fee_mode_lookup_table
+    author: abhinaykumar@bhavnacorp.com
+    changes:
+    - createTable:
+        tableName: fee_mode
+        columns:
+        - column:
+            name: fm_value
+            type: varchar(100)
+            constraints:
+              nullable: false
+        - column:
+            name: fm_key
+            type: varchar(50)
+            constraints:
+              primaryKey: true
+              primaryKeyName: pk_fee_mode
+        - column:
+            name: fm_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: fm_modified
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+                nullable: false
+- changeSet:
+    id: load_data_fee_mode_lookup_table
+    author: abhinaykumar@bhavnacorp.com
+    changes:
+    - loadData:
+       tableName: fee_mode
+       file: db/data/fee_mode.csv
+       separator: ','
+       columns:
+       - column:
+           name: fm_value
+           type: string
+       - column:
+           name: fm_key
+           type: string
+- changeSet:
+    id: create_fee_type_lookup_table
+    author: abhinaykumar@bhavnacorp.com
+    changes:
+    - createTable:
+        tableName: fee_type
+        columns:
+        - column:
+            name: ft_value
+            type: varchar(100)
+            constraints:
+              nullable: false
+        - column:
+            name: ft_key
+            type: varchar(50)
+            constraints:
+              primaryKey: true
+              primaryKeyName: pk_fee_type
+        - column:
+            name: ft_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: ft_modified
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+                nullable: false
+- changeSet:
+    id: load_data_fee_type_lookup_table
+    author: abhinaykumar@bhavnacorp.com
+    changes:
+    - loadData:
+       tableName: fee_type
+       file: db/data/fee_type.csv
+       separator: ','
+       columns:
+       - column:
+           name: ft_value
+           type: string
+       - column:
+           name: ft_key
+           type: string
+- changeSet:
+    id: create_fee_transaction_type_lookup_table
+    author: abhinaykumar@bhavnacorp.com
+    changes:
+    - createTable:
+        tableName: fee_transaction_type
+        columns:
+        - column:
+            name: ftt_value
+            type: varchar(100)
+            constraints:
+              nullable: false
+        - column:
+            name: ftt_key
+            type: varchar(50)
+            constraints:
+              primaryKey: true
+              primaryKeyName: pk_fee_transaction_type
+        - column:
+            name: ftt_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: ftt_modified
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+                nullable: false
+- changeSet:
+    id: load_fee_transaction_type_lookup_table
+    author: abhinaykumar@bhavnacorp.com
+    changes:
+    - loadData:
+       tableName: fee_transaction_type
+       file: db/data/fee_transaction_type.csv
+       separator: ','
+       columns:
+       - column:
+           name: ftt_value
+           type: string
+       - column:
+           name: ftt_key
+           type: string
+- changeSet:
+    id: create_fee_value_type_lookup_table
+    author: abhinaykumar@bhavnacorp.com
+    changes:
+    - createTable:
+        tableName: fee_value_type
+        columns:
+        - column:
+            name: fvt_value
+            type: varchar(100)
+            constraints:
+              nullable: false
+        - column:
+            name: fvt_key
+            type: varchar(50)
+            constraints:
+              primaryKey: true
+              primaryKeyName: pk_fee_value_type
+        - column:
+            name: fvt_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: fvt_modified
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+                nullable: false
+- changeSet:
+    id: load_data_fee_value_type_lookup_table
+    author: abhinaykumar@bhavnacorp.com
+    changes:
+    - loadData:
+       tableName: fee_value_type
+       file: db/data/fee_value_type.csv
+       separator: ','
+       columns:
+       - column:
+           name: fvt_value
+           type: string
+       - column:
+           name: fvt_key
+           type: string
+- changeSet:
+    id: create_fee_table
+    author: abhinaykumar@bhavnacorp.com
+    changes:
+    - createTable:
+        tableName: fee
+        columns:
+        - column:
+            name: accn_id
+            type: VARBINARY(16)
+            constraints:
+              foreignKeyName: fk_fee_account
+              references: account(accn_id)
+        - column:
+            name: fee_id
+            type: VARBINARY(16)
+            constraints:
+              primaryKey: true
+              primaryKeyName: pk_fee
+        - column:
+            name: fm_key
+            type: varchar(50)
+            constraints:
+              foreignKeyName: fk_fee_fee_mode
+              references: fee_mode(fm_key)
+        - column:
+            name: ft_key
+            type: varchar(50)
+            constraints:
+              foreignKeyName: fk_fee_fee_type
+              references: fee_type(ft_key)
+        - column:
+            name: ftt_key
+            type: varchar(50)
+            constraints:
+              foreignKeyName: fk_fee_fee_transaction_type
+              references: fee_transaction_type(ftt_key)
+        - column:
+            name: fvt_key
+            type: varchar(50)
+            constraints:
+              foreignKeyName: fk_fee_fee_value_type
+              references: fee_value_type(fvt_key)
+        - column:
+            name: fee_value
+            type: numeric(22,4)
+            constraints:
+              nullable: false
+        - column:
+            name: fee_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: fee_modified
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+                nullable: false
+        - column:
+            name: fee_deactivated
+            type: DATETIME
+- changeSet:
+    id: rename_table_subscription_member
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - renameTable:
+       newTableName: subscription_member
+       oldTableName: member_subscription
+- changeSet:
+    id: addColumn_fm_key
+    author: srana@bhavnacorp.com
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            name: fm_key
+            type: varchar(50)
+            constraints:
+              foreignKeyName: fk_account_adjustment_fee_mode
+              references: fee_mode(fm_key)
+        tableName: account_adjustment
+- changeSet:
+    id: rel1-6373_stlm_id
+    author: vrathore@bhavnacorp.com
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            name: stlm_id
+            type: VARBINARY(16)
+        tableName: payment
+- changeSet:
+    id: change_dtype_agr_numebr
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - modifyDataType:
+       columnName: agreement_number
+       newDataType: varchar(20)
+       tableName: agreement
+- changeSet:
+    id: dropTable_dimebox_processor
+    author: dmehra@bhavnacorp.com
+    changes:
+    - dropTable:
+        tableName: dimebox_processor
+- changeSet:
+    id: add_column_agremnt_campaign
+    author: tfaisal@bhavnacorp.com
+    changes:
+    - addColumn:
+        tableName: agreement
+        columns:
+        - column:
+            name: agrm_campgn
+            type: varchar(200)
+- changeSet:
+   id: REL1-4683_dropNotNullConstraint_sub_name
+   author: ykumar@bhavnacorp.com
+   changes:
+   - dropNotNullConstraint:
+       columnDataType: VARCHAR(100)
+       columnName: sub_name
+       tableName: subscription
+- changeSet:
+   id: REL1-4683_dropNotNullConstraint_supl_version
+   author: ykumar@bhavnacorp.com
+   changes:
+   - dropNotNullConstraint:
+       columnDataType: BIGINT(20)
+       columnName: supl_version
+       tableName: subscription
+- changeSet:
+   id: REL1-4683_dropNotNullConstraint_supl_id
+   author: ykumar@bhavnacorp.com
+   changes:
+   - dropNotNullConstraint:
+       columnDataType: VARBINARY(16)
+       columnName: supl_id
+       tableName: subscription
+- changeSet:
+    id: REL1-7321_create_agreement_member_table
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - createTable:
+        tableName: agreement_member
+        columns:
+        - column:
+            name: agme_created
+            type: DATETIME
+            defaultValueComputed: now()
+            constraints:
+              nullable: false
+        - column:
+            name: agme_deactivated
+            type: DATETIME
+        - column:
+            name: agreement_number
+            type: varchar(15)
+            constraints:
+              nullable: false
+        - column:
+            name: agme_is_active
+            type: BOOLEAN
+            constraints:
+              nullable: false
+        - column:
+            name: m_id
+            type: VARBINARY(16)
+            constraints:
+                nullable: false
+        - column:
+            name: agrm_id
+            type: VARBINARY(16)
+            constraints:
+              foreignKeyName: fk_agreement_member_agreement
+              references: agreement(agrm_id)
+- changeSet:
+    id: REL1-7321_add_uc_agreement_member_agrm_id_m_id
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - addUniqueConstraint :
+        constraintName: uc_agreement_member_agrm_id_m_id
+        columnNames: agrm_id,m_id
+        tableName: agreement_member
+- changeSet:
+    id: REL1-7343_add_column_acsu_trans_type
+    author: abhivegsingh@bhavnacorp.com
+    changes:
+      - addColumn:
+          tableName: account_summary
+          columns:
+            - column:
+                name: acsu_trans_type
+                type: ENUM ('STATEMENT','SETTLEMENT','ADJUSTMENT','PAYMENT','INVOICE','DEPOSIT')
+                constraints:
+                  nullable: true
+- changeSet:
+    id: REL1-7343_add_column_pma_trans_type
+    author: abhivegsingh@bhavnacorp.com
+    changes:
+      - addColumn:
+          tableName: payment_method_account
+          columns:
+            - column:
+                name: pma_trans_type
+                type: ENUM ('STATEMENT','SETTLEMENT','ADJUSTMENT','PAYMENT','INVOICE','DEPOSIT')
+                constraints:
+                  nullable: true
+- changeSet:
+    id: REL1-7556_addColumn_agme_is_primary
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            name: agme_is_primary
+            type: BOOLEAN
+        tableName: agreement_member
+- changeSet:
+      id:  REL1-7556_set_default_when_null_agme_is_primary
+      author: rjamuar@bhavnacorp.com
+      sql: "UPDATE agreement_member set agme_is_primary=false where agme_is_primary IS NULL;"
+      tableName: agreement_member
+- changeSet:
+    id: REL1-7556_add_not_null_constraint_agme_is_primary
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - addNotNullConstraint:
+       columnDataType: BOOLEAN
+       columnName: agme_is_primary
+       tableName: agreement_member
+- changeSet:
+    id: REL1-5143_dropNotNullConstraint_client_id
+    author: abhivegsingh@bhavnacorp.com
+    changes:
+      - dropNotNullConstraint:
+          columnDataType: VARBINARY(16)
+          columnName: client_id
+          tableName: client_account
+- changeSet:
+    id: REL1-5133_addColumn_billing_date
+    author: ankitaggarwal@bhavnacorp.com
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            name: pame_billing_date
+            type: DATETIME
+            constraints:
+              nullable: true
+        tableName: payment_method
+- changeSet:
+    id: REL1-5133_addColumn_s_evaluation
+    author: ankitaggarwal@bhavnacorp.com
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            name: pame_s_evaluation
+            type: varchar(100)
+            constraints:
+              nullable: true
+        tableName: payment_method
+- changeSet:
+    id: REL1-5133_add_non_null_pame_s_evaluation
+    author: ankitaggarwal@bhavnacorp.com
+    changes:
+    - addNotNullConstraint:
+        columnDataType: varchar(100)
+        columnName: pame_s_evaluation
+        defaultNullValue: ANNUALLY
+        tableName: payment_method
+- changeSet:
+    id: REL1-5133_add_non_null_pame_billing_date
+    author: ankitaggarwal@bhavnacorp.com
+    changes:
+    - addNotNullConstraint:
+        columnDataType: DATETIME
+        columnName: pame_billing_date
+        defaultNullValue: now()
+        tableName: payment_method
+- changeSet:
+    id: REL1-5974_add_column_sub_ref_prev_id
+    author: kbhardwaj@bhavnacorp.com
+    changes:
+    - addColumn:
+        tableName: subscription
+        columns:
+        - column:
+            name: sub_ref_prev_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: true
+- changeSet:
+    id: REL1-5974_add_column_sub_ref_next_id
+    author: kbhardwaj@bhavnacorp.com
+    changes:
+    - addColumn:
+        tableName: subscription
+        columns:
+        - column:
+            name: sub_ref_next_id
+            type: VARBINARY(16)
+            constraints:
+              nullable: true
+- changeSet:
+    id: REL1-5974_drop_sub_type
+    author: kbhardwaj@bhavnacorp.com
+    changes:
+    - dropColumn:
+        columnName: sub_type
+        tableName: subscription
+- changeSet:
+    id: REL1-5974_add_sub_type
+    author: kbhardwaj@bhavnacorp.com
+    changes:
+    - addColumn:
+        tableName: subscription
+        columns:
+        - column:
+            name: sub_type
+            type: ENUM('PRIMARY','SECONDARY','FREEZE','RENEW','CLONE')
+            constraints:
+              nullable: true
+- changeSet:
+    id: REL1-5974_drop_columns_of_renew
+    author: kbhardwaj@bhavnacorp.com
+    changes:
+    - dropColumn:
+        columnName: sub_renew_date
+        tableName: subscription
+    - dropColumn:
+        columnName: sub_renewal_frequency
+        tableName: subscription
+    - dropColumn:
+        columnName: sub_renew_expiration_date
+        tableName: subscription
+    - dropColumn:
+        columnName: sub_renewal_duration
+        tableName: subscription
+    - dropColumn:
+        columnName: sub_renew_ref_id
+        tableName: subscription
+- changeSet:
+    id: REL1-5974_dropColumn_subscription_sub_freeze_id
+    author: shubhamkumar@bhavnacorp.com
+    changes:
+    - dropColumn:
+        columnName: sub_freeze_id
+        tableName: subscription
+- changeSet:
+    id: REL1-5974_dropColumn_subscription_sub_referal_id
+    author: shubhamkumar@bhavnacorp.com
+    changes:
+    - dropColumn:
+        columnName: sub_referal_id
+        tableName: subscription

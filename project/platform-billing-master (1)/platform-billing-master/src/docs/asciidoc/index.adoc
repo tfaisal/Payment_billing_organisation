@@ -1,0 +1,2054 @@
+= Billing API
+ABC Financial;
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+
+== Location Onboarding
+
+include::{snippets}/updateLocationAccount/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+
+|Sever Error
+|503
+|Processor temporarily unavailable.
+
+|===
+
+include::{snippets}/createProcessor/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+
+|Sever Error
+|503
+|Processor temporarily unavailable.
+
+|===
+
+include::{snippets}/getProcessor/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+
+|Sever Error
+|503
+|Processor temporarily unavailable.
+
+|===
+
+include::{snippets}/deleteProcessor/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+
+|Sever Error
+|503
+|Processor temporarily unavailable.
+
+|===
+include::{snippets}/createLocationTaxRate/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Resource  not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|===
+include::{snippets}/updateLocationTaxRate/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Resource  not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|===
+
+include::{snippets}/getLocationTaxRate/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+
+|Sever Error
+|503
+|Processor temporarily unavailable.
+
+|===
+include::{snippets}/deleteLocationTaxRate/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Resource  not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|===
+include::{snippets}/getMemberAccount/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+
+|Sever Error
+|503
+|Processor temporarily unavailable.
+
+|===
+== Avalara Tax Master Code
+include::{snippets}/getAvalaraMastertaxCode/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined  blocked by rulesets.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|===
+== Avalara
+include::{snippets}/resolveAddress/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined  blocked by rulesets.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|===
+
+include::{snippets}/createAvalaraLocation/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined  blocked by rulesets.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+
+
+|===
+
+== Account Onboarding
+include::{snippets}/createClientAccount/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+
+|Sever Error
+|503
+|Processor temporarily unavailable.
+
+|===
+
+include::{snippets}/createPayorAccount/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+
+|Sever Error
+|503
+|Processor temporarily unavailable.
+
+|===
+
+include::{snippets}/updateAccount/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+
+|Sever Error
+|503
+|Processor temporarily unavailable.
+
+|===
+
+include::{snippets}/getClientAccounts/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+
+|Sever Error
+|503
+|Processor temporarily unavailable.
+
+|===
+
+include::{snippets}/getClientAccount/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+ |BadRequestException
+|400
+|Bad/Invalid request.
+ |AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+ |Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+ |ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+ |Sever Error
+|500
+|Unexpected Error.
+ |Sever Error
+|501
+|Unsupported payment method or Processor.
+ |Sever Error
+|503
+|Processor temporarily unavailable.
+|===
+
+include::{snippets}/getClientAccountByLocation/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+
+|Sever Error
+|503
+|Processor temporarily unavailable.
+
+|===
+
+include::{snippets}/reviewPayorAccounts/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+
+|Sever Error
+|503
+|Processor temporarily unavailable.
+
+|===
+
+include::{snippets}/reviewPayorAccount/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+
+|Sever Error
+|503
+|Processor temporarily unavailable.
+
+|===
+
+include::{snippets}/createPayorInvoice/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+
+|Sever Error
+|503
+|Processor temporarily unavailable.
+|===
+include::{snippets}/evaluateStatement/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+
+|Sever Error
+|503
+|Processor temporarily unavailable.
+|===
+include::{snippets}/generateStatement/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+
+|Sever Error
+|503
+|Processor temporarily unavailable.
+|===
+include::{snippets}/getStatementByStatementId/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+
+|Sever Error
+|503
+|Processor temporarily unavailable.
+|===
+
+include::{snippets}/getStatementByAccountId/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+
+|Sever Error
+|503
+|Processor temporarily unavailable.
+|===
+include::{snippets}/addPaymentMethod/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+|BadRequestException
+|400
+|Bad/Invalid request.
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+|Sever Error
+|500
+|Unexpected Error.
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+|Sever Error
+|503
+|Processor temporarily unavailable.
+|===
+include::{snippets}/updatePaymentMethodDetails/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+|BadRequestException
+|400
+|Bad/Invalid request.
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+|Sever Error
+|500
+|Unexpected Error.
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+|Sever Error
+|503
+|Processor temporarily unavailable.
+|===
+include::{snippets}/reviewPaymentMethod/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+|BadRequestException
+|400
+|Bad/Invalid request.
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+|Sever Error
+|500
+|Unexpected Error.
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+|Sever Error
+|503
+|Processor temporarily unavailable.
+|===
+include::{snippets}/evaluateSettlement/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+|BadRequestException
+|400
+|Bad/Invalid request.
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+|Sever Error
+|500
+|Unexpected Error.
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+|Sever Error
+|503
+|Processor temporarily unavailable.
+|===
+include::{snippets}/generateSettlement/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+|BadRequestException
+|400
+|Bad/Invalid request.
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+|Sever Error
+|500
+|Unexpected Error.
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+|Sever Error
+|503
+|Processor temporarily unavailable.
+|===
+include::{snippets}/createConfigureFee/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+|BadRequestException
+|400
+|Bad/Invalid request.
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+|Sever Error
+|500
+|Unexpected Error.
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+|Sever Error
+|503
+|Processor temporarily unavailable.
+|===
+include::{snippets}/getFeeByAccountId/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+|BadRequestException
+|400
+|Bad/Invalid request.
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+|Sever Error
+|500
+|Unexpected Error.
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+|Sever Error
+|503
+|Processor temporarily unavailable.
+|===
+include::{snippets}/updateConfigureFee/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+|BadRequestException
+|400
+|Bad/Invalid request.
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+|Sever Error
+|500
+|Unexpected Error.
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+|Sever Error
+|503
+|Processor temporarily unavailable.
+|===
+include::{snippets}/deleteFee/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+|BadRequestException
+|400
+|Bad/Invalid request.
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+|Sever Error
+|500
+|Unexpected Error.
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+|Sever Error
+|503
+|Processor temporarily unavailable.
+|===
+include::{snippets}/createPaymentStatus/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+|BadRequestException
+|400
+|Bad/Invalid request.
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+|Sever Error
+|500
+|Unexpected Error.
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+|Sever Error
+|503
+|Processor temporarily unavailable.
+|===
+include::{snippets}/applyPayment/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+|BadRequestException
+|400
+|Bad/Invalid request.
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+|Sever Error
+|500
+|Unexpected Error.
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+|Sever Error
+|503
+|Processor temporarily unavailable.
+|===
+include::{snippets}/reviewPayorTransactions/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+|BadRequestException
+|400
+|Bad/Invalid request.
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+|Sever Error
+|500
+|Unexpected Error.
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+|Sever Error
+|503
+|Processor temporarily unavailable.
+|===
+
+include::{snippets}/reviewPayorTransactionsSinceLastStatement/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+|BadRequestException
+|400
+|Bad/Invalid request.
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+|Sever Error
+|500
+|Unexpected Error.
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+|Sever Error
+|503
+|Processor temporarily unavailable.
+|===
+include::{snippets}/reviewClientTransactions/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+|BadRequestException
+|400
+|Bad/Invalid request.
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+|Sever Error
+|500
+|Unexpected Error.
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+|Sever Error
+|503
+|Processor temporarily unavailable.
+|===
+
+== Subscription
+
+include::{snippets}/calculatePricing/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+
+|Sever Error
+|503
+|Processor temporarily unavailable.
+
+|===
+
+include::{snippets}/createSubscription/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+
+|Sever Error
+|503
+|Processor temporarily unavailable.
+
+|===
+
+include::{snippets}/getSubscription/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+
+|Sever Error
+|503
+|Processor temporarily unavailable.
+
+|===
+
+include::{snippets}/getMemberSubscriptions/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+
+|Sever Error
+|503
+|Processor temporarily unavailable.
+
+|===
+
+include::{snippets}/expireSubscription/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+
+|Sever Error
+|503
+|Processor temporarily unavailable.
+
+|===
+
+include::{snippets}/getRemainingSubscriptionValue/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+
+|Sever Error
+|503
+|Processor temporarily unavailable.
+
+|===
+
+include::{snippets}/refundSubscription/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+
+|Sever Error
+|503
+|Processor temporarily unavailable.
+
+|===
+include::{snippets}/getInvoices/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|ModelStateInvalid
+|404
+|Member account not found
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|===
+include::{snippets}/getPaymentByAccount/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|ModelStateInvalid
+|404
+|Payment or InvoiceItem not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|===
+include::{snippets}/getStatement/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|ModelStateInvalid
+|404
+|Account,or StatementInvoice not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+|===
+include::{snippets}/cancelSubscription/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+
+|Sever Error
+|503
+|Processor temporarily unavailable.
+|===
+include::{snippets}/getCancelSubscription/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|ModelStateInvalid
+|404
+|Subscription not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+|===
+include::{snippets}/updateCancelSubscription/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+
+|Sever Error
+|503
+|Processor temporarily unavailable.
+|===
+include::{snippets}/removeCancelSubscription/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|ModelStateInvalid
+|404
+|Subscription not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|===
+include::{snippets}/updateSubscription/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|ModelStateInvalid
+|404
+|Subscription not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|===
+include::{snippets}/freezeSubscription/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|ModelStateInvalid
+|404
+|Subscription not found.
+
+|Sever Error
+|500
+|Unexpected Error
+
+|===
+include::{snippets}/updatefreezeSubscription/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|ModelStateInvalid
+|404
+|Subscription not found.
+
+|Sever Error
+|500
+|Unexpected Error
+
+|===
+include::{snippets}/getFreezeSubscription/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|url not found
+|404
+|Requested Subscription id does not exist with provided LocationId, URL doesn't exist
+
+|Sever Error
+|500
+|Unexpected Error.
+|===
+include::{snippets}/removeFreezeSubscription/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|ModelStateInvalid
+|404
+|Subscription not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+|===
+include::{snippets}/getMemberSubscriptions/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+
+|Sever Error
+|503
+|Processor temporarily unavailable.
+
+|===
+== Email
+include::{snippets}/email/sendPurchaseEmail/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+
+|Sever Error
+|503
+|Processor temporarily unavailable.
+
+|===
+== Agreement
+include::{snippets}/createAgreement/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+
+|Sever Error
+|503
+|Processor temporarily unavailable.
+
+|===
+
+include::{snippets}/getRemainingAgreementValue/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+
+|Sever Error
+|503
+|Processor temporarily unavailable.
+
+|===
+
+include::{snippets}/getAgreementByNumber/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|Forbidden
+|403
+|Operation declined by processor or blocked by rulesets.
+
+|ModelStateInvalid
+|404
+|Transaction,Account or Organisation not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|Sever Error
+|501
+|Unsupported payment method or Processor.
+
+|Sever Error
+|503
+|Processor temporarily unavailable.
+
+|===
+include::{snippets}/cancelAgreement/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|ModelStateInvalid
+|404
+|Agreement not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|===
+include::{snippets}/removeCancelAgreement/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|ModelStateInvalid
+|404
+|Agreement not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|===
+include::{snippets}/addAgreementSubscription/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|ModelStateInvalid
+|404
+|Agreement not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|===
+include::{snippets}/removeAgreementSubscription/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|ModelStateInvalid
+|404
+|Agreement not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|===
+== Update Member Subscription
+include::{snippets}/addMemberSubscription/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|ModelStateInvalid
+|404
+|Subscription not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|===
+include::{snippets}/removeMemberSubscription/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|ModelStateInvalid
+|404
+|Subscription not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|===
+include::{snippets}/addAgreementMembersApi/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|ModelStateInvalid
+|404
+|Agreement not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|===
+include::{snippets}/removeAgreementMembersApi/auto-section.adoc[]
+==== Error Responses
+|===
+|Error Code|HTTP Error Code|Description
+
+|BadRequestException
+|400
+|Bad/Invalid request.
+
+|AuthenticationException
+|401
+|Unauthenticated User/missing API Key.
+
+|ModelStateInvalid
+|404
+|Agreement not found.
+
+|Sever Error
+|500
+|Unexpected Error.
+
+|===
+
+

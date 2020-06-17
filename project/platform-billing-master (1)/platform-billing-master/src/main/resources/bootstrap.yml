@@ -1,0 +1,16 @@
+spring:
+  application.name: 'billing'
+  profiles.active: 'local'
+  cloud.config:
+    enabled: false
+    uri: 'http://localhost:8280'
+logging:
+  level:
+    com.abcfinancial: DEBUG
+    com.netflix: WARN
+    org.springframework: WARN
+    org.apache: WARN
+    com.zaxxer: WARN
+    org.hibernate: WARN
+    org.quartz: WARN
+    liquibase: WARN

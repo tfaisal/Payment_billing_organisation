@@ -1,0 +1,3 @@
+final libabcpipeline = library('libabcpipeline@master')
+
+springPipeline(failureChannels: '#bhavna-notifications')

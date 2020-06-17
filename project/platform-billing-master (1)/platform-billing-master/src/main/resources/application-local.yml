@@ -1,0 +1,118 @@
+server.port: 8587
+management.server.port: 8586
+datasource:
+  host: 'localhost:3306'
+  schema: 'billing'
+  url: 'jdbc:mysql://${datasource.host}/${datasource.schema}?zeroDateTimeBehavior=convertToNull&useSSL=false&useLegacyDatetimeCode=false'
+spring:
+  zipkin:
+    enabled: false
+    base-url: 'http://localhost:9411/'
+  jpa.hibernate.ddl-auto: none
+  jpa.hibernate.naming.physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  kafka:
+    bootstrapServers: localhost:9092
+    consumer:
+      groupId: billing
+      autoOffsetReset: earliest
+      keyDeserializer: org.apache.kafka.common.serialization.StringDeserializer
+      valueDeserializer: org.apache.kafka.common.serialization.StringDeserializer #spring message converter will take care of deserialization
+    producer:
+      keySerializer: org.apache.kafka.common.serialization.StringSerializer
+      valueSerializer: org.springframework.kafka.support.serializer.JsonSerializer
+  datasource:
+    name: 'PlatformMySQL'
+    driver-class-name: 'com.mysql.jdbc.Driver'
+    url: '${datasource.url}'
+    username: 'platform_billing'
+    password: 'CfRpUEsYSnyiTlrPMLGcHPKRCGmlOEFCSslsHPvtNcIefFYJPA'
+  liquibase:
+    url: '${datasource.url}'
+    user: 'platform_billing'
+    password: 'CfRpUEsYSnyiTlrPMLGcHPKRCGmlOEFCSslsHPvtNcIefFYJPA'
+  quartz:
+    job-store-type: jdbc
+    overwrite-existing-jobs: true
+    jdbc:
+      initialize-schema: never
+    properties:
+      org.quartz:
+        scheduler:
+          instanceName: 'billing-scheduler'
+          instanceId: 'AUTO'
+        threadPool:
+          threadCount: 10
+          threadPriority: 5
+        jobStore:
+          isClustered: true
+          clusterCheckinInterval: 20000
+          misfireThreshold: 63072000
+          class: 'org.quartz.impl.jdbcjobstore.JobStoreTX'
+          driverDelegateClass: 'org.quartz.impl.jdbcjobstore.StdJDBCDelegate'
+security:
+  oauth2:
+    client:
+      client-id: 'AUTOMATED_TESTING'
+      client-secret: 't3st@llth3th1ngs'
+    resource:
+      jwt:
+        key-value: 'local_signing_key'
+abcfinancial:
+  email:
+    provider: 'LOCAL'
+    template:
+      purchase-request: 'BigBox-PurchaseRequest'
+  aws:
+    sender: 'noreply@greatestclubmanagementsoftwareever.com'
+    region: 'us-west-2'
+    accessKey: ''
+    secretKey: ''
+  security:
+    hierarchy:
+      scopePattern: '*:admin > *:protected *:protected > *:write *:write > *:read'
+      authorityPattern: '*:client-admin > *:client-protected *:client-protected > *:client-write *:client-write > *:client-read *:admin > *:protected *:protected > *:write *:write > *:read'
+account.username: avalaratax@abcfinancial.com
+account.password: TaxDev@Bhavna
+avalara.offer: ABCFinancialAvaTaxIncluded
+## Dimebox URI
+dimebox:
+  uri:
+    #Dimebox create transaction API URI
+    createtransaction:  https://dev.30preprod.com/api-deprecated/dimebox/transaction
+    #Dimebox get Card API URI
+    getCardDetails:  https://dev.30preprod.com/api-deprecated/dimebox/transaction/card
+    #Dimebox get Account URI
+    getAccountById:  https://dev.30preprod.com/api-deprecated/dimebox/setup/account/
+    #Dimebox Refund card transaction
+    refundCardDetails: https://dev.30preprod.com/api-deprecated/dimebox/transaction/{TransID}/refund
+    #Dimebox Void card transaction
+    voidCardTransaction: https://dev.30preprod.com/api-deprecated/dimebox/transaction/{TransID}/void_capture
+    #Dimebox get Card API URI
+    updateCardDetails: https://dev.30preprod.com/api-deprecated/dimebox/transaction/card/
+avalara:
+  uri:
+    requestNewAccount: https://dev.30preprod.com/api/requestNewAccount
+    queryCompanies: https://dev.30preprod.com/api/queryCompanies
+    queryLocations: https://dev.30preprod.com/api/queryLocations
+    resolveAddress: https://dev.30preprod.com/api/resolveAddress
+    getNexus: https://dev.30preprod.com/api/nexus/{companyId}
+    createTransaction: https://dev.30preprod.com/api/createTransaction
+    createLocationAccount: https://dev.30preprod.com/api/createLocation/{companyId}
+    createNexus: https://dev.30preprod.com/api/nexus/{companyId}
+paymentGateway:
+  uri:
+    createMerchant: https://dev.30preprod.com/api/merchant
+    activateMerchant: https://dev.30preprod.com/api/merchants/activate/
+    processorId: 89c5c413-0a20-4013-bbc2-46296ba65328
+    companyId: d93af958-41fc-498e-be57-5eb53a790efc
+    paymentRequest: https://dev.30preprod.com/api/charge
+    depositRequest: https://dev.30preprod.com/api/deposit
+authorisation:
+  uri:
+    getAccessTokenUsingOath2: https://dev.30preprod.com/api/token?grant_type=client_credentials
+    client-id: 'AUTOMATED_TESTING'
+    client-secret: 't3st@llth3th1ngs'
+generalLedger:
+  scheduleTime:
+    settlement: 23.15.00.00
+    statement: 23.00.00.00

@@ -1,0 +1,936 @@
+databaseChangeLog:
+- changeSet:
+    id: quartz-1
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: QRTZ_BLOB_TRIGGERS_PKEY
+            name: SCHED_NAME
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: QRTZ_BLOB_TRIGGERS_PKEY
+            name: TRIGGER_NAME
+            type: VARCHAR(200)
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: QRTZ_BLOB_TRIGGERS_PKEY
+            name: TRIGGER_GROUP
+            type: VARCHAR(200)
+        - column:
+            name: BLOB_DATA
+            type: BLOB
+        tableName: QRTZ_BLOB_TRIGGERS
+- changeSet:
+    id: quartz-2
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: QRTZ_CALENDARS_PKEY
+            name: SCHED_NAME
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: QRTZ_CALENDARS_PKEY
+            name: CALENDAR_NAME
+            type: VARCHAR(200)
+        - column:
+            constraints:
+              nullable: false
+            name: CALENDAR
+            type: BLOB
+        tableName: QRTZ_CALENDARS
+- changeSet:
+    id: quartz-3
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: QRTZ_CRON_TRIGGERS_PKEY
+            name: SCHED_NAME
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: QRTZ_CRON_TRIGGERS_PKEY
+            name: TRIGGER_NAME
+            type: VARCHAR(200)
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: QRTZ_CRON_TRIGGERS_PKEY
+            name: TRIGGER_GROUP
+            type: VARCHAR(200)
+        - column:
+            constraints:
+              nullable: false
+            name: CRON_EXPRESSION
+            type: VARCHAR(120)
+        - column:
+            name: TIME_ZONE_ID
+            type: VARCHAR(80)
+        tableName: QRTZ_CRON_TRIGGERS
+- changeSet:
+    id: quartz-4
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: QRTZ_FIRED_TRIGGERS_PKEY
+            name: SCHED_NAME
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: QRTZ_FIRED_TRIGGERS_PKEY
+            name: ENTRY_ID
+            type: VARCHAR(95)
+        - column:
+            constraints:
+              nullable: false
+            name: TRIGGER_NAME
+            type: VARCHAR(200)
+        - column:
+            constraints:
+              nullable: false
+            name: TRIGGER_GROUP
+            type: VARCHAR(200)
+        - column:
+            constraints:
+              nullable: false
+            name: INSTANCE_NAME
+            type: VARCHAR(200)
+        - column:
+            constraints:
+              nullable: false
+            name: FIRED_TIME
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: SCHED_TIME
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: PRIORITY
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: STATE
+            type: VARCHAR(16)
+        - column:
+            name: JOB_NAME
+            type: VARCHAR(200)
+        - column:
+            name: JOB_GROUP
+            type: VARCHAR(200)
+        - column:
+            name: IS_NONCONCURRENT
+            type: BOOLEAN
+        - column:
+            name: REQUESTS_RECOVERY
+            type: BOOLEAN
+        tableName: QRTZ_FIRED_TRIGGERS
+- changeSet:
+    id: quartz-5
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: QRTZ_JOB_DETAILS_PKEY
+            name: SCHED_NAME
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: QRTZ_JOB_DETAILS_PKEY
+            name: JOB_NAME
+            type: VARCHAR(200)
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: QRTZ_JOB_DETAILS_PKEY
+            name: JOB_GROUP
+            type: VARCHAR(200)
+        - column:
+            name: DESCRIPTION
+            type: VARCHAR(250)
+        - column:
+            constraints:
+              nullable: false
+            name: JOB_CLASS_NAME
+            type: VARCHAR(250)
+        - column:
+            constraints:
+              nullable: false
+            name: IS_DURABLE
+            type: BOOLEAN
+        - column:
+            constraints:
+              nullable: false
+            name: IS_NONCONCURRENT
+            type: BOOLEAN
+        - column:
+            constraints:
+              nullable: false
+            name: IS_UPDATE_DATA
+            type: BOOLEAN
+        - column:
+            constraints:
+              nullable: false
+            name: REQUESTS_RECOVERY
+            type: BOOLEAN
+        - column:
+            name: JOB_DATA
+            type: BLOB
+        tableName: QRTZ_JOB_DETAILS
+- changeSet:
+    id: quartz-6
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: QRTZ_LOCKS_PKEY
+            name: SCHED_NAME
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: QRTZ_LOCKS_PKEY
+            name: LOCK_NAME
+            type: VARCHAR(40)
+        tableName: QRTZ_LOCKS
+- changeSet:
+    id: quartz-7
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: QRTZ_PAUSED_TRIGGER_GRPS_PKEY
+            name: SCHED_NAME
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: QRTZ_PAUSED_TRIGGER_GRPS_PKEY
+            name: TRIGGER_GROUP
+            type: VARCHAR(200)
+        tableName: QRTZ_PAUSED_TRIGGER_GRPS
+- changeSet:
+    id: quartz-8
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: QRTZ_SCHEDULER_STATE_PKEY
+            name: SCHED_NAME
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: QRTZ_SCHEDULER_STATE_PKEY
+            name: INSTANCE_NAME
+            type: VARCHAR(200)
+        - column:
+            constraints:
+              nullable: false
+            name: LAST_CHECKIN_TIME
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: CHECKIN_INTERVAL
+            type: BIGINT
+        tableName: QRTZ_SCHEDULER_STATE
+- changeSet:
+    id: quartz-9
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: QRTZ_SIMPLE_TRIGGERS_PKEY
+            name: SCHED_NAME
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: QRTZ_SIMPLE_TRIGGERS_PKEY
+            name: TRIGGER_NAME
+            type: VARCHAR(200)
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: QRTZ_SIMPLE_TRIGGERS_PKEY
+            name: TRIGGER_GROUP
+            type: VARCHAR(200)
+        - column:
+            constraints:
+              nullable: false
+            name: REPEAT_COUNT
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: REPEAT_INTERVAL
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: TIMES_TRIGGERED
+            type: BIGINT
+        tableName: QRTZ_SIMPLE_TRIGGERS
+- changeSet:
+    id: quartz-10
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: QRTZ_SIMPROP_TRIGGERS_PKEY
+            name: SCHED_NAME
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: QRTZ_SIMPROP_TRIGGERS_PKEY
+            name: TRIGGER_NAME
+            type: VARCHAR(200)
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: QRTZ_SIMPROP_TRIGGERS_PKEY
+            name: TRIGGER_GROUP
+            type: VARCHAR(200)
+        - column:
+            name: STR_PROP_1
+            type: VARCHAR(512)
+        - column:
+            name: STR_PROP_2
+            type: VARCHAR(512)
+        - column:
+            name: STR_PROP_3
+            type: VARCHAR(512)
+        - column:
+            name: INT_PROP_1
+            type: INTEGER
+        - column:
+            name: INT_PROP_2
+            type: INTEGER
+        - column:
+            name: LONG_PROP_1
+            type: BIGINT
+        - column:
+            name: LONG_PROP_2
+            type: BIGINT
+        - column:
+            name: DEC_PROP_1
+            type: numeric(13, 4)
+        - column:
+            name: DEC_PROP_2
+            type: numeric(13, 4)
+        - column:
+            name: BOOL_PROP_1
+            type: BOOLEAN
+        - column:
+            name: BOOL_PROP_2
+            type: BOOLEAN
+        tableName: QRTZ_SIMPROP_TRIGGERS
+- changeSet:
+    id: quartz-11
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: QRTZ_TRIGGERS_PKEY
+            name: SCHED_NAME
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: QRTZ_TRIGGERS_PKEY
+            name: TRIGGER_NAME
+            type: VARCHAR(200)
+        - column:
+            constraints:
+              primaryKey: true
+              primaryKeyName: QRTZ_TRIGGERS_PKEY
+            name: TRIGGER_GROUP
+            type: VARCHAR(200)
+        - column:
+            constraints:
+              nullable: false
+            name: JOB_NAME
+            type: VARCHAR(200)
+        - column:
+            constraints:
+              nullable: false
+            name: JOB_GROUP
+            type: VARCHAR(200)
+        - column:
+            name: DESCRIPTION
+            type: VARCHAR(250)
+        - column:
+            name: NEXT_FIRE_TIME
+            type: BIGINT
+        - column:
+            name: PREV_FIRE_TIME
+            type: BIGINT
+        - column:
+            name: PRIORITY
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: TRIGGER_STATE
+            type: VARCHAR(16)
+        - column:
+            constraints:
+              nullable: false
+            name: TRIGGER_TYPE
+            type: VARCHAR(8)
+        - column:
+            constraints:
+              nullable: false
+            name: START_TIME
+            type: BIGINT
+        - column:
+            name: END_TIME
+            type: BIGINT
+        - column:
+            name: CALENDAR_NAME
+            type: VARCHAR(200)
+        - column:
+            name: MISFIRE_INSTR
+            type: SMALLINT
+        - column:
+            name: JOB_DATA
+            type: BLOB
+        tableName: QRTZ_TRIGGERS
+- changeSet:
+    id: quartz-12
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: SCHED_NAME
+        - column:
+            name: INSTANCE_NAME
+        - column:
+            name: REQUESTS_RECOVERY
+        indexName: idx_QRTZ_FT_INST_JOB_REQ_RCVRY
+        tableName: QRTZ_FIRED_TRIGGERS
+- changeSet:
+    id: quartz-13
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: SCHED_NAME
+        - column:
+            name: JOB_NAME
+        - column:
+            name: JOB_GROUP
+        indexName: idx_QRTZ_FT_J_G
+        tableName: QRTZ_FIRED_TRIGGERS
+- changeSet:
+    id: quartz-14
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: SCHED_NAME
+        - column:
+            name: JOB_GROUP
+        indexName: idx_QRTZ_FT_JG
+        tableName: QRTZ_FIRED_TRIGGERS
+- changeSet:
+    id: quartz-15
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: SCHED_NAME
+        - column:
+            name: TRIGGER_NAME
+        - column:
+            name: TRIGGER_GROUP
+        indexName: idx_QRTZ_FT_T_G
+        tableName: QRTZ_FIRED_TRIGGERS
+- changeSet:
+    id: quartz-16
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: SCHED_NAME
+        - column:
+            name: TRIGGER_GROUP
+        indexName: idx_QRTZ_FT_TG
+        tableName: QRTZ_FIRED_TRIGGERS
+- changeSet:
+    id: quartz-17
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: SCHED_NAME
+        - column:
+            name: INSTANCE_NAME
+        indexName: idx_QRTZ_FT_TRIG_INST_NAME
+        tableName: QRTZ_FIRED_TRIGGERS
+- changeSet:
+    id: quartz-18
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: SCHED_NAME
+        - column:
+            name: JOB_GROUP
+        indexName: idx_QRTZ_J_GRP
+        tableName: QRTZ_JOB_DETAILS
+- changeSet:
+    id: quartz-19
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: SCHED_NAME
+        - column:
+            name: REQUESTS_RECOVERY
+        indexName: idx_QRTZ_J_REQ_RECOVERY
+        tableName: QRTZ_JOB_DETAILS
+- changeSet:
+    id: quartz-20
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: SCHED_NAME
+        - column:
+            name: CALENDAR_NAME
+        indexName: idx_QRTZ_T_C
+        tableName: QRTZ_TRIGGERS
+- changeSet:
+    id: quartz-21
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: SCHED_NAME
+        - column:
+            name: TRIGGER_GROUP
+        indexName: idx_QRTZ_T_G
+        tableName: QRTZ_TRIGGERS
+- changeSet:
+    id: quartz-22
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: SCHED_NAME
+        - column:
+            name: JOB_NAME
+        - column:
+            name: JOB_GROUP
+        indexName: idx_QRTZ_T_J
+        tableName: QRTZ_TRIGGERS
+- changeSet:
+    id: quartz-23
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: SCHED_NAME
+        - column:
+            name: JOB_GROUP
+        indexName: idx_QRTZ_T_JG
+        tableName: QRTZ_TRIGGERS
+- changeSet:
+    id: quartz-24
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: SCHED_NAME
+        - column:
+            name: TRIGGER_GROUP
+        - column:
+            name: TRIGGER_STATE
+        indexName: idx_QRTZ_T_N_G_STATE
+        tableName: QRTZ_TRIGGERS
+- changeSet:
+    id: quartz-25
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: SCHED_NAME
+        - column:
+            name: TRIGGER_NAME
+        - column:
+            name: TRIGGER_GROUP
+        - column:
+            name: TRIGGER_STATE
+        indexName: idx_QRTZ_T_N_STATE
+        tableName: QRTZ_TRIGGERS
+- changeSet:
+    id: quartz-26
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: SCHED_NAME
+        - column:
+            name: NEXT_FIRE_TIME
+        indexName: idx_QRTZ_T_NEXT_FIRE_TIME
+        tableName: QRTZ_TRIGGERS
+- changeSet:
+    id: quartz-27
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: SCHED_NAME
+        - column:
+            name: MISFIRE_INSTR
+        - column:
+            name: NEXT_FIRE_TIME
+        indexName: idx_QRTZ_T_NFT_MISFIRE
+        tableName: QRTZ_TRIGGERS
+- changeSet:
+    id: quartz-28
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: SCHED_NAME
+        - column:
+            name: TRIGGER_STATE
+        - column:
+            name: NEXT_FIRE_TIME
+        indexName: idx_QRTZ_T_NFT_ST
+        tableName: QRTZ_TRIGGERS
+- changeSet:
+    id: quartz-29
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: SCHED_NAME
+        - column:
+            name: MISFIRE_INSTR
+        - column:
+            name: NEXT_FIRE_TIME
+        - column:
+            name: TRIGGER_STATE
+        indexName: idx_QRTZ_T_NFT_ST_MISFIRE
+        tableName: QRTZ_TRIGGERS
+- changeSet:
+    id: quartz-30
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: SCHED_NAME
+        - column:
+            name: MISFIRE_INSTR
+        - column:
+            name: NEXT_FIRE_TIME
+        - column:
+            name: TRIGGER_GROUP
+        - column:
+            name: TRIGGER_STATE
+        indexName: idx_QRTZ_T_NFT_ST_MISFIRE_GRP
+        tableName: QRTZ_TRIGGERS
+- changeSet:
+    id: quartz-31
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: SCHED_NAME
+        - column:
+            name: TRIGGER_STATE
+        indexName: idx_QRTZ_T_STATE
+        tableName: QRTZ_TRIGGERS
+- changeSet:
+    id: quartz-32
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP
+        baseTableName: QRTZ_BLOB_TRIGGERS
+        constraintName: QRTZ_BLOB_TRIGGERS_SCHED_NAME_FKEY
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP
+        referencedTableName: QRTZ_TRIGGERS
+        validate: true
+- changeSet:
+    id: quartz-33
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP
+        baseTableName: QRTZ_CRON_TRIGGERS
+        constraintName: QRTZ_CRON_TRIGGERS_SCHED_NAME_FKEY
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP
+        referencedTableName: QRTZ_TRIGGERS
+        validate: true
+- changeSet:
+    id: quartz-34
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP
+        baseTableName: QRTZ_SIMPLE_TRIGGERS
+        constraintName: QRTZ_SIMPLE_TRIGGERS_SCHED_NAME_FKEY
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP
+        referencedTableName: QRTZ_TRIGGERS
+        validate: true
+- changeSet:
+    id: quartz-35
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP
+        baseTableName: QRTZ_SIMPROP_TRIGGERS
+        constraintName: QRTZ_SIMPROP_TRIGGERS_SCHED_NAME_FKEY
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: SCHED_NAME,TRIGGER_NAME,TRIGGER_GROUP
+        referencedTableName: QRTZ_TRIGGERS
+        validate: true
+- changeSet:
+    id: quartz-36
+    author: rjamuar@bhavnacorp.com
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: SCHED_NAME,JOB_NAME,JOB_GROUP
+        baseTableName: QRTZ_TRIGGERS
+        constraintName: QRTZ_TRIGGERS_SCHED_NAME_FKEY
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: SCHED_NAME,JOB_NAME,JOB_GROUP
+        referencedTableName: QRTZ_JOB_DETAILS
+        validate: true
+- changeSet:
+    id: modify_column_size_DESCRIPTION
+    author: rjamuar@bhavnacorp.com
+    changes:
+      - modifyDataType:
+          columnName: DESCRIPTION
+          newDataType: VARCHAR(1000)
+          tableName: QRTZ_JOB_DETAILS
+- changeSet:
+    id: dropForeignKey_QRTZ_BLOB_TRIGGERS_SCHED_NAME_FKEY
+    author: magarwal@bhavnacorp.com
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: QRTZ_BLOB_TRIGGERS
+        constraintName: QRTZ_BLOB_TRIGGERS_SCHED_NAME_FKEY
+- changeSet:
+    id: dropForeignKey_QRTZ_CRON_TRIGGERS_SCHED_NAME_FKEY
+    author: magarwal@bhavnacorp.com
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: QRTZ_CRON_TRIGGERS
+        constraintName: QRTZ_CRON_TRIGGERS_SCHED_NAME_FKEY
+- changeSet:
+    id: dropForeignKey_QRTZ_SIMPLE_TRIGGERS_SCHED_NAME_FKEY
+    author: magarwal@bhavnacorp.com
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: QRTZ_SIMPLE_TRIGGERS
+        constraintName: QRTZ_SIMPLE_TRIGGERS_SCHED_NAME_FKEY
+- changeSet:
+    id: dropForeignKey_QRTZ_SIMPROP_TRIGGERS_SCHED_NAME_FKEY
+    author: magarwal@bhavnacorp.com
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: QRTZ_SIMPROP_TRIGGERS
+        constraintName: QRTZ_SIMPROP_TRIGGERS_SCHED_NAME_FKEY
+- changeSet:
+    id: dropForeignKey_QRTZ_TRIGGERS_SCHED_NAME_FKEY
+    author: magarwal@bhavnacorp.com
+    preConditions:
+    - onFail: MARK_RAN
+    - foreignKeyConstraintExists:
+        foreignKeyName: QRTZ_TRIGGERS_SCHED_NAME_FKEY
+    changes:
+    - dropForeignKeyConstraint:
+        baseTableName: QRTZ_TRIGGERS
+        constraintName: QRTZ_TRIGGERS_SCHED_NAME_FKEY
+- changeSet:
+   id: dropTable_QRTZ_LOCKS
+   author: magarwal@bhavnacorp.com
+   changes:
+   - dropTable:
+       cascadeConstraints: true
+       tableName: QRTZ_LOCKS
+- changeSet:
+   id: dropTable_QRTZ_FIRED_TRIGGERS
+   author: magarwal@bhavnacorp.com
+   changes:
+   - dropTable:
+       cascadeConstraints: true
+       tableName: QRTZ_FIRED_TRIGGERS
+- changeSet:
+   id: dropTable_QRTZ_SCHEDULER_STATE
+   author: magarwal@bhavnacorp.com
+   changes:
+   - dropTable:
+       cascadeConstraints: true
+       tableName: QRTZ_SCHEDULER_STATE
+- changeSet:
+   id: dropTable_QRTZ_CRON_TRIGGERS
+   author: magarwal@bhavnacorp.com
+   changes:
+   - dropTable:
+       cascadeConstraints: true
+       tableName: QRTZ_CRON_TRIGGERS
+- changeSet:
+   id: dropTable_QRTZ_PAUSED_TRIGGER_GRPS
+   author: magarwal@bhavnacorp.com
+   changes:
+   - dropTable:
+       cascadeConstraints: true
+       tableName: QRTZ_PAUSED_TRIGGER_GRPS
+- changeSet:
+   id: dropTable_QRTZ_SIMPLE_TRIGGERS
+   author: magarwal@bhavnacorp.com
+   changes:
+   - dropTable:
+       cascadeConstraints: true
+       tableName: QRTZ_SIMPLE_TRIGGERS
+- changeSet:
+   id: dropTable_QRTZ_SIMPROP_TRIGGERS
+   author: magarwal@bhavnacorp.com
+   changes:
+   - dropTable:
+       cascadeConstraints: true
+       tableName: QRTZ_SIMPROP_TRIGGERS
+- changeSet:
+   id: dropTable_QRTZ_BLOB_TRIGGERS
+   author: magarwal@bhavnacorp.com
+   changes:
+   - dropTable:
+       cascadeConstraints: true
+       tableName: QRTZ_BLOB_TRIGGERS
+- changeSet:
+   id: dropTable_QRTZ_CALENDARS
+   author: magarwal@bhavnacorp.com
+   changes:
+   - dropTable:
+       cascadeConstraints: true
+       tableName: QRTZ_CALENDARS
+- changeSet:
+   id: dropTable_QRTZ_TRIGGERS
+   author: magarwal@bhavnacorp.com
+   changes:
+   - dropTable:
+       cascadeConstraints: true
+       tableName: QRTZ_TRIGGERS
+- changeSet:
+   id: dropTable_QRTZ_JOB_DETAILS
+   author: magarwal@bhavnacorp.com
+   changes:
+   - dropTable:
+       cascadeConstraints: true
+       tableName: QRTZ_JOB_DETAILS
+- changeSet:
+      id: create_quartz_schema_withsql
+      author: magarwal@bhavnacorp.com
+      changes:
+      - sqlFile:
+            dbms: h2
+            relativeToChangelogFile: true
+            path: h2.sql
+            splitStatements: true
+      - sqlFile:
+            dbms: mysql
+            relativeToChangelogFile: true
+            path: mysql.sql
+            splitStatements: true
+- changeSet:
+    id: REL1-7556_modify_column_size_DESCRIPTION
+    author: rjamuar@bhavnacorp.com
+    changes:
+      - modifyDataType:
+          columnName: DESCRIPTION
+          newDataType: VARCHAR(2000)
+          tableName: QRTZ_JOB_DETAILS

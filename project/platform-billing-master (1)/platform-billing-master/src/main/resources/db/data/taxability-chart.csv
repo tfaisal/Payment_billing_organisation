@@ -1,0 +1,19 @@
+﻿amtc_tax_code,amtc_tax_description
+OD020320,Dues/Membership - with No Transfer of TPP (e.g. Retail Shopping Club)
+OD020400,Dues/Membership - Guarantees Transfer of TPP (e.g. magazine subscription comes with membership)
+ON030000,Non-taxable Fee
+P0000000,Taxable Product
+PB100000,Books and Manuals
+PC040100,General Clothing
+PC040129,Hats and Caps
+PC040144,Shoes and Shoe Laces
+PC040148,Socks and Stockings
+PC040403,Gloves including baseball/bowling/boxing/hockey/golf
+PF050001,General Food (nutritional)
+PF050700,Dietary Supplements
+SA080000,Athletic/Health Club Services (services-related fee associated with athletic or spa membership)
+SC223100,Daycare and Babysitting Services
+SP036858,Personal Training Services
+ST080000,General Training and Seminars
+SY010100,Yoga Classes - in yoga studio (only yoga classes offered)
+SY010200,Yoga Classes - in facilities that offer services other than yoga classes

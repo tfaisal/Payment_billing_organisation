@@ -1,0 +1,33 @@
+databaseChangeLog:
+- property:
+    name: uuid_function
+    dbms: mysql
+    value:  uuid_swap_bin(uuid())
+- property:
+    name: uuid_function
+    dbms: postgresql
+    value: public.uuid_generate_v4()
+- property:
+    name: uuid_function
+    dbms: h2
+    value: random_uuid()
+- property:
+    name: client_id
+    context: local,dev,qa,pre
+    value: AUTOMATED_TESTING
+- property:
+    name: client_id
+    context: production
+    value: BIG_BOX_PROD
+
+- changeSet:
+    id: initiate-schema
+    author: rjamuar@bhavnacorp.com
+    changes:
+      - sqlFile:
+          dbms: mysql
+          path: sql/init-schema-mysql.sql
+          stripComments: true
+          runOnChange: true
+          endDelimiter: '|'
+          relativeToChangelogFile: true

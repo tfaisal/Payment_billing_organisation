@@ -1,0 +1,96 @@
+package com.abcfinancial.api.billing.subscriptionmanagement.subscription.enums;
+
+public enum CanadaBankCode
+{
+    BANK_OF_MONTREAL( "001" ),
+    BANK_OF_NOVA_SCOTIA( "002" ),
+    ROYAL_BANK_OF_CANADA( "003" ),
+    TORONTO_DOMINION_BANK( "004" ),
+    NATIONAL_BANK_OF_CANADA( "006" ),
+    CANADIAN_IMPERIAL_BANK_OF_COMMERCE( "010" ),
+    HSBC_CANADA( "016" ),
+    CANADIAN_WESTERN_BANK( "030" ),
+    LAURENTIAN_BANK_OF_CANADA( "039" ),
+    GOVERNMENT_OF_CANADA( "117" ),
+    CANADA_POST( "127" ),
+    BANK_OF_CANADA( "177" ),
+    ALBERTA_TREASURY_BRANCHES( "219" ),
+    THE_ROYAL_BANK_OF_SCOTLAND_NV_CANADA( "240" ),
+    BANK_OF_AMERICA_CANADA( "241" ),
+    THE_BANK_OF_NEW_YORK_MELLON( "242" ),
+    THE_BANK_OF_TOKYO_MITSUBISHI( "245" ),
+    BNP_PARIBAS( "250" ),
+    CITIBANK_CANADA( "260" ),
+    DEUTSCHE_BANK_AG( "265" ),
+    MEGA_INTERNATIONAL_COMMERCIAL_BANK_CANADA( "269" ),
+    JPMORGAN_CHASE_BANK( "270" ),
+    KOREA_EXCHANGE_BANK_OF_CANADA( "275" ),
+    MIZUHO_CORPORATE_BANK_LTD( "277" ),
+    UBS_BANK( "290" ),
+    STATE_BANK_OF_INDIA( "294" ),
+    SUMITOMO_MITSUI_BANKING_CORP_OF_CDA( "301" ),
+    AMEX_BANK_OF_CANADA( "303" ),
+    INDUSTRIAL_AND_COMMERCIAL_BANK_OF_CHINA( "307" ),
+    BANK_OF_CHINA( "308" ),
+    CITIZENS_BANK_OF_CANADA( "309" ),
+    FIRST_NATIONS_BANK_OF_CANADA( "310" ),
+    BOFA_CANADA_BANK( "311" ),
+    JP_MORGAN_BANK_CANADA( "314" ),
+    CTC_BANK_OF_CANADA( "315" ),
+    HABIB_CANADIAN_BANK( "321" ),
+    CAPITAL_ONE_BANK( "323" ),
+    PRESIDENT_CHOICE_FINANCIAL( "326" ),
+    STATE_STREET( "327" ),
+    CITIBANK_NA( "328" ),
+    COMERICA_BANK( "330" ),
+    FIRST_COMMERCIAL_BANK( "332" ),
+    PACIFIC_AND_WESTERN_BANK_OF_CANADA( "334" ),
+    UNITED_OVERSEAS_BANK_LIMITED( "335" ),
+    CANADIAN_TIRE_BANK( "338" ),
+    ICICI_BANK_CANADA( "340" ),
+    BANK_WEST( "342" ),
+    HOLLIS_CANADIAN_BANK( "343" ),
+    SOCIETE_GENERALE( "346" ),
+    BRIDGEWATER_BANK( "347" ),
+    DIRECTCASH_BANK( "352" ),
+    JAMESON_BANK( "354" ),
+    SHINHAN_BANK_CANADA( "355" ),
+    THE_CANADA_TRUST_COMPANY( "509" ),
+    MANULIFE_BANK( "540" ),
+    CS_ALTERNA_BANK( "608" ),
+    TANGERINE_BANK( "614" ),
+    CENTRAL_CREDIT_UNION_BRITISH_COLUMBIA( "809" ),
+    CAISSES_DESJARDINS_DU_QUEBEC( "815" ),
+    CAISSES_POPULAIRES_DESJARDINS_DU_MANITOBA( "819" ),
+    CENTRAL_1_CREDIT_UNION_ONTARIO( "828" ),
+    CAISSES_POPULAIRES_DESJARDINS_DE_L_ONTARIO( "829" ),
+    MERIDIAN_CREDIT_UNION( "837" ),
+    CREDIT_UNION_HERITAGE( "839" ),
+    CAISSES_POPULAIRES_DESJARDINS_ACADIENNES( "865" ),
+    CREDIT_UNION_CENTRAL_OF_MANITOBA( "879" ),
+    CREDIT_UNION_CENTRAL_OF_SASKATCHEWAN( "889" ),
+    CREDIT_UNION_CENTRAL_ALBERTA( "899" );
+    private String number;
+
+    public String getNumber()
+    {
+        return number;
+    }
+
+    CanadaBankCode( String number )
+    {
+        this.number = number;
+    }
+
+    public static CanadaBankCode forBankCode( String number )
+    {
+        for( CanadaBankCode p : CanadaBankCode.values() )
+        {
+            if( p.number.equals( number ) )
+            {
+                return p;
+            }
+        }
+        return null;
+    }
+}

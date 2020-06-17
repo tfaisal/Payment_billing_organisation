@@ -1,0 +1,83 @@
+databaseChangeLog:
+- include:
+    file: init/db.changelog-init.yaml
+    relativeToChangelogFile: true
+- include:
+    file: quartz/db.changelog-quartz.yaml
+    relativeToChangelogFile: true
+- include:
+    file: billing/db.changelog-billing.yaml
+    relativeToChangelogFile: true
+- loadData:
+    tableName: currency_lookup
+    file: db/data/iso-currencies.csv
+    separator: ','
+    columns:
+    - column:
+        name: cur_id
+        type: string
+    - column:
+        name: cur_name
+        type: string
+    - column:
+        name: cur_code
+        type: numeric
+    - column:
+        name: cur_minor_units
+        type: numeric
+- loadData:
+    tableName: ava_master_tax_code
+    file: db/data/taxability-chart.csv
+    separator: ','
+    columns:
+    - column:
+        name: amtc_tax_code
+        type: string
+    - column:
+        name: amtc_tax_description
+        type: string
+- changeSet:
+    id: rel1_1844_renameColumn_billingDate
+    author: srana@bhavnacorp.com
+    changes:
+      - renameColumn:
+          columnDataType: datetime
+          newColumnName: accn_cycle_date
+          oldColumnName: accn_billing_date
+          tableName: account
+- changeSet:
+    id: rel1-4542_loc_id
+    author: vrathore@bhavnacorp.com
+    changes:
+    - addColumn:
+        columns:
+        - column:
+            name: loc_id
+            type: VARBINARY(16)
+        tableName: account_summary
+- changeSet:
+      id: create_index_account_summary_loc_id
+      author: ankitaggarwal@bhavnacorp.com
+      dbms : mysql
+      preConditions:
+      - onFail: MARK_RAN
+      - not:
+          - indexExists:
+              indexName: idx_account_summary_loc_id
+      changes:
+          - createIndex:
+                columns:
+                    - column:
+                          name: loc_id
+                          type: varbinary(16)
+                indexName: idx_account_summary_loc_id
+                tableName: account_summary
+- changeSet:
+      id: truncate_qrtz_tables
+      author: magarwal@bhavnacorp.com
+      changes:
+          - sqlFile:
+                dbms: mysql
+                relativeToChangelogFile: true
+                path: quartz/20192104.truncate.qrtz.tables.sql
+                splitStatements: true

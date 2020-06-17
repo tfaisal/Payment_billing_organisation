@@ -1,0 +1,3 @@
+* @abcfinancial2/billing-regulators
+/config/ @abcfinancial2/admins
+/src/main/resources/db/changelog/ @abcfinancial2/data-engineers
